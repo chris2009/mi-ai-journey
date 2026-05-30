@@ -1,0 +1,15 @@
+# Repo de referencia (solo lectura, no subir)
+ai-engineering-from-scratch/
+
+# Entornos virtuales
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# Secretos
+.env
+*.env.local
