@@ -66,5 +66,30 @@ Excluir checkpoints de modelos (pesan cientos de MB a GB):
 
 ### Quiz: 3/3 ✅
 
+## Lección 03 — GPU Setup & Cloud ✅
+
+### Benchmark CPU vs GPU (RTX 4070 Laptop)
+| Modo | Tiempo (matriz 5000x5000) |
+|------|--------------------------|
+| CPU | 0.463s |
+| GPU (con warm-up) | 0.032s |
+| **Speedup real** | **15x** |
+
+> Sin warm-up el resultado fue 2x — el overhead de inicialización CUDA distorsiona la primera medición.
+
+### Estimación de VRAM
+```
+Regla fp16: parámetros = VRAM_bytes / 2
+8.6 GB → ~4.3B parámetros en fp16
+8.6 GB → ~8-9B parámetros en int4 (cuantizado)
+```
+Modelos que caben localmente: Llama 3.2 3B, Phi-3.5 Mini (3.8B)
+
+### Conceptos clave
+- **CUDA warm-up**: primera operación GPU incluye JIT + init, no medir sin warm-up
+- **VRAM**: memoria del GPU, independiente de la RAM del sistema; limita tamaño del modelo
+- **fp16**: 2 bytes/parámetro (mitad de fp32), pérdida mínima de precisión
+- **int4**: cuantización a 4 bits, ~0.5 bytes/parámetro, cabe el doble de modelo
+
 ## Dudas y pendientes
 
