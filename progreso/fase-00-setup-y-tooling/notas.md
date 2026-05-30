@@ -91,5 +91,34 @@ Modelos que caben localmente: Llama 3.2 3B, Phi-3.5 Mini (3.8B)
 - **fp16**: 2 bytes/parámetro (mitad de fp32), pérdida mínima de precisión
 - **int4**: cuantización a 4 bits, ~0.5 bytes/parámetro, cabe el doble de modelo
 
+## Lección 04 — APIs & Keys ✅
+
+### Patrón universal de API
+```
+Tu código → HTTP POST [URL + API key + JSON body] → Servidor
+          ← JSON response ←
+```
+
+### Campos clave en la respuesta JSON
+| Campo | Descripción |
+|-------|-------------|
+| `content[0].text` | Texto de respuesta del modelo |
+| `usage.input_tokens` | Tokens enviados (se cobran) |
+| `usage.output_tokens` | Tokens recibidos (se cobran) |
+| `stop_reason: "end_turn"` | El modelo terminó normalmente |
+
+### Seguridad de API keys
+- Nunca en el código — siempre en `.env`
+- `.env` en `.gitignore` (ya configurado)
+- Cargar con `python-dotenv`: `load_dotenv()` antes de `os.environ[...]`
+
+### Conceptos clave
+- **SDK vs HTTP crudo**: el SDK simplifica headers, serialización y errores — pero es solo HTTP por debajo
+- **Rate limit**: límite de requests por minuto/hora — manejar con retry + backoff
+- **input/output tokens**: unidad de facturación, no palabras
+
+### Output generado
+- `outputs/prompts/api-troubleshooter.md`
+
 ## Dudas y pendientes
 
