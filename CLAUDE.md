@@ -32,6 +32,12 @@ Christian (christian.cajusol@utec.edu.pe). Aprendo AI Engineering siguiendo el c
 - Commit después de cada lección completada
 - README.md se actualiza con el progreso al terminar cada lección
 
+## Mantenimiento de este archivo
+**Actualizar CLAUDE.md siempre que:**
+- Se complete una lección (cambiar ⬜/🔄 a ✅ en la tabla de progreso)
+- Se cambie de fase
+- Se agregue una convención nueva al proyecto
+
 ## Cómo guiar las lecciones
 1. Leer `ai-engineering-from-scratch/phases/XX-nombre/YY-leccion/docs/en.md`
 2. Explicar en español, hacer ejercicios prácticos
