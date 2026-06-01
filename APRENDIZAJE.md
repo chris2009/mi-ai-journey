@@ -330,6 +330,83 @@ code --install-extension ms-python.python
 
 ---
 
+### L06 — Python Environments ✅
+
+**Concepto central:** Cada proyecto necesita su propio entorno aislado. Sin eso, es dependency hell.
+
+**El problema:**
+```
+Proyecto A → torch 2.4 (CUDA 12.4)
+Proyecto B → torch 2.1 (CUDA 11.8)
+Sin venvs → solo puede existir uno → el otro se rompe
+```
+
+**Herramientas:**
+
+| Tool | Cuándo usarla |
+|------|--------------|
+| `uv venv` | La mayoría de proyectos — 10-100x más rápido |
+| `venv` (built-in) | Si no tienes `uv` |
+| `conda` | Necesitas controlar CUDA toolkit o estás en cluster |
+
+**Regla crítica — uv no instala pip:**
+```bash
+# venvs creados con uv NO tienen pip interno — usar siempre:
+uv pip list
+uv pip install paquete
+uv pip show paquete
+```
+
+**Aislamiento demostrado en ejercicio:**
+```bash
+# Crear segundo venv y demostrar que los paquetes no se mezclan
+uv venv /tmp/test-env
+source /tmp/test-env/bin/activate
+uv pip install "numpy==1.26.4"
+python -c "import numpy; print(numpy.__version__)"  # → 1.26.4
+
+deactivate
+source .venv/bin/activate
+python -c "import numpy; print(numpy.__version__)"  # → 2.4.4 — ¡aislados!
+```
+
+**pyproject.toml con grupos opcionales:**
+```toml
+[project]
+name = "mi-ai-journey"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26", "matplotlib>=3.8", "jupyter>=1.0"]
+
+[project.optional-dependencies]
+torch = ["torch>=2.3", "torchvision>=0.18"]
+llm   = ["anthropic>=0.39", "openai>=1.50", "python-dotenv>=1.0"]
+ml    = ["scikit-learn>=1.4", "pandas>=2.0"]
+```
+```bash
+uv pip install -e ".[torch]"        # base + PyTorch
+uv pip install -e ".[llm]"          # base + LLM SDKs
+uv pip install -e ".[torch,llm]"    # todo junto
+```
+
+**CUDA compatibility check:**
+```bash
+nvidia-smi | grep "CUDA Version"                    # → 12.5 (driver)
+python -c "import torch; print(torch.version.cuda)" # → 12.4 (PyTorch)
+# Regla: PyTorch CUDA <= driver CUDA ✅
+# Si PyTorch CUDA > driver → "CUDA not available" aunque la GPU esté presente
+```
+
+**Resultado verificado (RTX 4070 Laptop):**
+
+| | Versión |
+|---|---|
+| Driver CUDA | 12.5 |
+| PyTorch CUDA | 12.4 ✅ |
+
+**Quiz: pre 2/2 · post 3/3** ✅
+
+---
+
 ## Fase 01 — Math Foundations ⬜
 
 *Pendiente*

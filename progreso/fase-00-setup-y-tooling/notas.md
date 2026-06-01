@@ -161,5 +161,105 @@ code --install-extension ms-python.python
 
 ### Quiz: pre 1/2 · post 3/3 ✅
 
+## Lección 06 — Python Environments ✅
+
+### El problema: dependency hell
+Sin venvs, instalar `torch 2.4` para un proyecto rompe el que necesitaba `torch 2.1`.
+Con venvs: cada proyecto tiene su propio intérprete y paquetes aislados.
+
+### Herramientas
+| Tool | Cuándo usarla |
+|------|--------------|
+| `uv venv` | La mayoría de proyectos — 10-100x más rápido que pip |
+| `venv` (built-in) | Si no tienes `uv` |
+| `conda` | Necesitas controlar CUDA toolkit o estás en cluster |
+
+### Regla crítica: uv no instala pip
+```bash
+# En un venv creado con uv, siempre usar:
+uv pip list
+uv pip install paquete
+uv pip show paquete
+# NO usar: python -m pip  (pip no está instalado en el venv)
+```
+
+### Aislamiento demostrado
+```bash
+# test-env:  numpy==1.26.4  (instalado manualmente)
+# .venv:     numpy==2.4.4   (ya existía)
+# → coexisten sin conflicto
+```
+
+### pyproject.toml con grupos opcionales
+```toml
+[project]
+name = "mi-ai-journey"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26", "matplotlib>=3.8", "jupyter>=1.0"]
+
+[project.optional-dependencies]
+torch = ["torch>=2.3", "torchvision>=0.18"]
+llm   = ["anthropic>=0.39", "openai>=1.50", "python-dotenv>=1.0"]
+ml    = ["scikit-learn>=1.4", "pandas>=2.0"]
+```
+```bash
+uv pip install -e ".[torch]"        # base + PyTorch
+uv pip install -e ".[llm]"          # base + LLM SDKs
+uv pip install -e ".[torch,llm]"    # todo junto
+```
+
+### CUDA compatibility check
+```bash
+nvidia-smi | grep "CUDA Version"   # → 12.5 (driver)
+python -c "import torch; print(torch.version.cuda)"  # → 12.4 (PyTorch)
+# Regla: PyTorch CUDA <= driver CUDA  ✅
+# Si fuera al revés → "CUDA not available" aunque GPU esté presente
+```
+
+### Quiz: pre 2/2 · post 3/3 ✅
+
 ## Dudas y pendientes
 
+## Lección 06 — Python Environments ✅
+
+### El problema: dependency hell
+Sin venvs, instalar `torch 2.4` para un proyecto rompe el que necesitaba `torch 2.1`.
+Con venvs: cada proyecto tiene su propio intérprete y paquetes aislados.
+
+### Herramientas
+| Tool | Cuándo usarla |
+|------|--------------|
+| `uv venv` | La mayoría de proyectos — 10-100x más rápido que pip |
+| `venv` (built-in) | Si no tienes `uv` |
+| `conda` | Necesitas controlar CUDA toolkit o estás en cluster |
+
+### Regla crítica: uv no instala pip
+```bash
+# En un venv creado con uv, siempre usar:
+uv pip list
+uv pip install paquete
+# NO usar: python -m pip  (pip no está en el venv de uv)
+```
+
+### Aislamiento demostrado
+- `test-env`: numpy==1.26.4 (instalado manualmente)
+- `.venv`: numpy==2.4.4 (ya existía)
+- Coexisten sin conflicto ✅
+
+### pyproject.toml con grupos opcionales
+Archivo creado en raíz del repo. Instalar por grupo:
+```bash
+uv pip install -e ".[torch]"      # base + PyTorch
+uv pip install -e ".[llm]"        # base + LLM SDKs
+uv pip install -e ".[torch,llm]"  # todo junto
+```
+
+### CUDA compatibility (verificado)
+| | Versión |
+|---|---|
+| Driver CUDA (nvidia-smi) | 12.5 |
+| PyTorch CUDA | 12.4 |
+
+Regla: PyTorch CUDA <= driver CUDA. Si fuera al revés → "CUDA not available".
+
+### Quiz: pre 2/2 · post 3/3 ✅
