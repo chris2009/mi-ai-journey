@@ -22,7 +22,7 @@ Christian (christian.cajusol@utec.edu.pe). Aprendo AI Engineering siguiendo el c
 | L02 | Git & Collaboration | ✅ |
 | L03 | GPU Setup & Cloud | ✅ |
 | L04 | APIs & Keys | ✅ |
-| L05 | Jupyter Notebooks | 🔄 En progreso |
+| L05 | Jupyter Notebooks | ✅ |
 | L06–L12 | (pendientes) | ⬜ |
 
 ## Convenciones

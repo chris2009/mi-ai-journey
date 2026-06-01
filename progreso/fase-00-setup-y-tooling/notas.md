@@ -120,5 +120,46 @@ Tu código → HTTP POST [URL + API key + JSON body] → Servidor
 ### Output generado
 - `outputs/prompts/api-troubleshooter.md`
 
+## Lección 05 — Jupyter Notebooks ✅
+
+### Benchmark list comprehension vs NumPy (100k elementos)
+| Método | List | NumPy | Speedup |
+|--------|------|-------|---------|
+| `%timeit` (promedio) | 5.25 ms | 42.3 μs | **~124x** |
+| Manual (1 run) | 4.75 ms | 1.01 ms | 5x |
+
+> La medición manual mintió igual que el GPU sin warm-up en L03. `%timeit` corre miles de veces y promedia — ese es el número real.
+
+### Magic commands clave
+| Comando | Uso |
+|---------|-----|
+| `%timeit` | Microbenchmark — corre muchas veces y promedia |
+| `%%time` | Wall time de una celda — corre una sola vez |
+| `%matplotlib inline` | Plots inline en el notebook |
+| `!comando` | Ejecutar shell desde el notebook |
+
+### Trampas comunes
+| Trampa | Fix |
+|--------|-----|
+| Ejecución fuera de orden | `Kernel > Restart & Run All` antes de compartir |
+| Estado oculto (celda borrada, variable viva) | Reiniciar kernel regularmente |
+| Memory leak | `del var` + `gc.collect()` |
+
+### Cuándo notebook vs script
+- **Notebook**: explorar datos, prototipar, visualizar, explicar
+- **Script**: pipelines, utilidades reutilizables, producción, código con schedule
+
+### Setup de kernel en VS Code + WSL
+```bash
+# Registrar el venv como kernel de Jupyter
+python -m ipykernel install --user --name=ai-engineering --display-name "Python (AI Engineering)"
+
+# Instalar extensiones en WSL (no en Windows)
+code --install-extension ms-toolsai.jupyter
+code --install-extension ms-python.python
+```
+
+### Quiz: pre 1/2 · post 3/3 ✅
+
 ## Dudas y pendientes
 
