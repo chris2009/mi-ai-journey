@@ -407,6 +407,80 @@ python -c "import torch; print(torch.version.cuda)" # → 12.4 (PyTorch)
 
 ---
 
+### L07 — Docker for AI ✅
+
+**Concepto central:** Containers hacen que "funciona en mi máquina" sea cosa del pasado.
+
+**Vocabulario:**
+
+| Término | Analogía | Qué es |
+|---------|----------|--------|
+| Image | Receta | Plantilla read-only construida desde un Dockerfile |
+| Container | Cocina en uso | Instancia corriendo de una image |
+| Volume | Carpeta compartida | Directorio del host mapeado al container — persiste |
+| docker-compose | Director de orquesta | Levanta múltiples servicios con un comando |
+
+**Regla de orden en Dockerfile — capas de menor a mayor cambio:**
+```dockerfile
+FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04  # nunca cambia → arriba
+RUN apt-get install python3 ...              # cambia poco
+RUN pip install torch==2.6.0 ...             # cambia poco
+COPY ./mi_codigo .                           # cambia mucho → abajo
+```
+Si `COPY` estuviera arriba: cada cambio de código invalida el cache de PyTorch (GB) y lo reinstala.
+
+**Dockerfile del ejercicio:**
+```dockerfile
+FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04
+ENV DEBIAN_FRONTEND=noninteractive PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y python3 python3-pip git curl \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN python -m pip install --no-cache-dir torch==2.6.0 \
+    --index-url https://download.pytorch.org/whl/cu124
+
+RUN python -m pip install --no-cache-dir numpy jupyter flask
+
+WORKDIR /workspace
+EXPOSE 8888 5000
+CMD ["python"]
+```
+
+**Volumes — críticos en AI:**
+```bash
+docker run --rm --gpus all \
+    -v $(pwd):/workspace \    # código → persiste
+    -v ~/models:/models \     # modelos 14GB → se descargan una sola vez
+    ai-dev-l07 python train.py
+```
+
+**NVIDIA Container Toolkit:**
+- Driver CUDA → vive en el **host** (RTX 4070)
+- Toolkit CUDA (librerías) → vive **dentro del container**
+- `--gpus all` → activa el puente entre ambos
+
+**Docker Compose — stack completo:**
+```bash
+docker compose up -d      # ai-dev + qdrant en background
+docker compose down -v    # para todo + elimina volumes
+```
+Servicios se hablan por nombre: `http://qdrant:6333` desde ai-dev.
+
+**Resultado verificado:**
+```
+ai-dev-l07 (7.92 GB): PyTorch 2.6.0+cu124, CUDA: True ✅
+RTX 4070 Laptop accesible desde dentro del container
+```
+
+**Errores reales encontrados:**
+1. `python3.12` no existe en Ubuntu 22.04 repos → usar `python3` (3.10)
+2. `torch==2.3.1` no existe para cu124 → versión mínima disponible es `2.4.0`
+
+**Quiz: pre 2/2 · post 2/3** ✅
+
+---
+
 ## Fase 01 — Math Foundations ⬜
 
 *Pendiente*

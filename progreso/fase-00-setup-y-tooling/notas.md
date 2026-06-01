@@ -218,48 +218,52 @@ python -c "import torch; print(torch.version.cuda)"  # → 12.4 (PyTorch)
 
 ### Quiz: pre 2/2 · post 3/3 ✅
 
-## Dudas y pendientes
+## Lección 07 — Docker for AI ✅
 
-## Lección 06 — Python Environments ✅
+### Vocabulario clave
+| Término | Qué es |
+|---------|--------|
+| Image | Plantilla read-only. Construida desde un Dockerfile. |
+| Container | Instancia corriendo de una image. |
+| Volume | Directorio del host mapeado al container. Persiste entre reinicios. |
+| docker-compose | Orquesta múltiples servicios con un comando. |
 
-### El problema: dependency hell
-Sin venvs, instalar `torch 2.4` para un proyecto rompe el que necesitaba `torch 2.1`.
-Con venvs: cada proyecto tiene su propio intérprete y paquetes aislados.
-
-### Herramientas
-| Tool | Cuándo usarla |
-|------|--------------|
-| `uv venv` | La mayoría de proyectos — 10-100x más rápido que pip |
-| `venv` (built-in) | Si no tienes `uv` |
-| `conda` | Necesitas controlar CUDA toolkit o estás en cluster |
-
-### Regla crítica: uv no instala pip
-```bash
-# En un venv creado con uv, siempre usar:
-uv pip list
-uv pip install paquete
-# NO usar: python -m pip  (pip no está en el venv de uv)
+### Regla de orden en Dockerfile
+Lo que cambia menos → más arriba (se cachea). Lo que cambia más → abajo.
+```dockerfile
+FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04  # nunca cambia
+RUN apt-get install python3 ...              # cambia poco
+RUN pip install torch ...                    # cambia poco
+COPY ./mi_codigo .                           # cambia mucho → AL FINAL
 ```
 
-### Aislamiento demostrado
-- `test-env`: numpy==1.26.4 (instalado manualmente)
-- `.venv`: numpy==2.4.4 (ya existía)
-- Coexisten sin conflicto ✅
-
-### pyproject.toml con grupos opcionales
-Archivo creado en raíz del repo. Instalar por grupo:
+### Volumes — por qué son críticos en AI
 ```bash
-uv pip install -e ".[torch]"      # base + PyTorch
-uv pip install -e ".[llm]"        # base + LLM SDKs
-uv pip install -e ".[torch,llm]"  # todo junto
+-v ~/models:/models   # modelo 14GB descargado una vez, vive en el host
+-v $(pwd):/workspace  # código persistente entre rebuilds
 ```
 
-### CUDA compatibility (verificado)
-| | Versión |
-|---|---|
-| Driver CUDA (nvidia-smi) | 12.5 |
-| PyTorch CUDA | 12.4 |
+### NVIDIA Container Toolkit
+- El **driver CUDA** vive en el **host**
+- El **toolkit CUDA** (librerías) vive **dentro del container**
+- `--gpus all` activa el puente entre ambos
 
-Regla: PyTorch CUDA <= driver CUDA. Si fuera al revés → "CUDA not available".
+### Resultado verificado
+```
+ai-dev-l07: PyTorch 2.6.0+cu124, CUDA: True  (7.92 GB)
+RTX 4070 Laptop accesible desde dentro del container ✅
+```
 
-### Quiz: pre 2/2 · post 3/3 ✅
+### Errores encontrados y fixes
+1. `python3.12` no existe en Ubuntu 22.04 repos → usar `python3` (3.10)
+2. `torch==2.3.1` no existe para cu124 → versión mínima es `2.4.0` (usamos `2.6.0`)
+
+### Docker Compose — un comando para todo el stack
+```bash
+docker compose up -d     # levanta ai-dev + qdrant
+docker compose down      # para todo
+docker compose down -v   # para todo + elimina volumes
+```
+Servicios se comunican por nombre: `http://qdrant:6333` desde ai-dev.
+
+### Quiz: pre 2/2 · post 2/3 ✅
