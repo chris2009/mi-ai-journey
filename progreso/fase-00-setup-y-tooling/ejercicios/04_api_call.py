@@ -12,4 +12,4 @@ response = client.messages.create(
     messages=[{"role": "user", "content": "What is a neural network in one sentence?"}]
 )
 
-print(response.content[0].text)
+print(response.content)

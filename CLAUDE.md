@@ -44,12 +44,12 @@ Cada lección completada debe producir:
 **Rol de Christian:** Ejecuta. Escribe el código, corre los comandos, comparte los outputs.
 
 ### Flujo por lección:
-1. Claude lee `en.md` y administra pre-quiz con AskUserQuestion
-2. Claude explica la lección en español (conceptos, por qué importa, contexto)
-3. Claude da instrucciones de ejercicios UNO POR UNO — Christian los ejecuta
-4. Christian comparte el output → Claude lo verifica y explica qué significa
-5. Claude administra post-quiz con AskUserQuestion
-6. Claude traduce el `en.md` completo al español → guarda en `lecciones/`
+1. Claude lee `en.md` y lo traduce al español → guarda en `lecciones/L0Y-nombre.md`
+2. Claude pregunta a Christian: "¿Ya leíste la lección?" — esperar confirmación antes de continuar
+3. Claude administra pre-quiz con AskUserQuestion
+4. Claude guía los ejercicios del `.md` traducido UNO POR UNO — Christian los ejecuta
+5. Christian comparte el output → Claude lo verifica, guarda en `outputs/` y explica qué significa
+6. Claude administra post-quiz con AskUserQuestion
 7. Claude actualiza notas.md, APRENDIZAJE.md, CLAUDE.md, README.md
 8. Commit + push
 
