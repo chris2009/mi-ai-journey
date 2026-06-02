@@ -1,0 +1,54 @@
+# === Ejercicio L02: .gitignore para proyectos AI ===
+# Agrega estas entradas a tu .gitignore para excluir archivos de modelos y datos grandes
+
+# Pesos de modelos
+*.bin
+*.pt
+*.pth
+*.safetensors
+*.onnx
+*.gguf
+*.ggml
+
+# Datasets y datos grandes
+data/*.parquet
+data/*.csv
+data/*.arrow
+datasets/
+
+# Caché de Hugging Face (guardada en ~/.cache/huggingface/ por defecto)
+# Pero si usas un path local:
+models/
+checkpoints/
+runs/
+
+# Artefactos de entrenamiento
+*.pkl
+*.joblib
+wandb/
+mlruns/
+lightning_logs/
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+**/.ipynb_checkpoints
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

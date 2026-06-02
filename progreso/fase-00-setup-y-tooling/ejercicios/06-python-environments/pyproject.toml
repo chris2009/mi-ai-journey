@@ -1,0 +1,44 @@
+# Ejercicio L06: pyproject.toml con grupos opcionales de dependencias
+# Proyecto que necesita PyTorch + Anthropic SDK
+
+[project]
+name = "mi-ai-journey"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "matplotlib>=3.8",
+    "jupyter>=1.0",
+    "ipykernel>=6.0",
+]
+
+[project.optional-dependencies]
+torch = [
+    "torch>=2.3",
+    "torchvision>=0.18",
+    "torchaudio>=2.3",
+]
+llm = [
+    "anthropic>=0.39",
+    "openai>=1.50",
+    "python-dotenv>=1.0",
+]
+ml = [
+    "scikit-learn>=1.4",
+    "pandas>=2.0",
+    "seaborn>=0.13",
+]
+data = [
+    "datasets>=2.0",
+    "huggingface-hub>=0.20",
+]
+
+# Instalar grupos:
+#   uv pip install -e ".[torch]"        # base + PyTorch
+#   uv pip install -e ".[llm]"          # base + SDKs de LLM
+#   uv pip install -e ".[torch,llm]"    # PyTorch + LLMs juntos
+#   uv pip install -e ".[torch,llm,ml,data]"  # todo
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

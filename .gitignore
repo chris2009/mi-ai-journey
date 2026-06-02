@@ -13,3 +13,13 @@ node_modules/
 # Secretos
 .env
 *.env.local
+
+# Model checkpoints (demasiado grandes para git)
+.pt
+.pth
+.safetensors
+.ckpt
+.bin
+
+# Virtual Enviroments
+.venv

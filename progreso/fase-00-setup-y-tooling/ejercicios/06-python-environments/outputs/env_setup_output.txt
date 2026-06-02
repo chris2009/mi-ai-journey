@@ -1,0 +1,56 @@
+=== AI Engineering from Scratch: Python Environment Setup ===
+
+Repo root: /mnt/d/APRENDIZAJE/AI_ENGINEERING
+
+  [PASS] uv found: uv 0.11.17 (x86_64-unknown-linux-gnu)
+  [PASS] Python: Python 3.13.0
+
+--- Creating virtual environment ---
+
+  [WARN] Existing .venv found. Reusing it.
+  [PASS] Activated virtual environment
+  [PASS] Python path: /mnt/d/APRENDIZAJE/AI_ENGINEERING/.venv/bin/python
+
+--- Installing core packages ---
+
+Resolved 110 packages in 3.32s
+Downloading scipy (33.6MiB)
+Downloading scikit-learn (8.5MiB)
+ Downloaded scikit-learn
+ Downloaded scipy
+Prepared 4 packages in 5.79s
+warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.
+         If the cache and target directories are on different filesystems, hardlinking may not be supported.
+         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+Installed 4 packages in 1m 13s
+ + joblib==1.5.3
+ + scikit-learn==1.8.0
+ + scipy==1.17.1
+ + threadpoolctl==3.6.0
+  [PASS] Installed: numpy matplotlib jupyter scikit-learn pandas
+
+--- Verifying installation ---
+
+  numpy: 2.4.4
+  matplotlib: 3.10.9
+  scikit-learn: 1.8.0
+  pandas: 3.0.3
+  jupyter: 5.9.1
+
+  Matrix multiply check: ((3, 3)) @ ((3, 3)) = ((3, 3))
+  [PASS] NumPy operations working
+
+  PyTorch 2.6.0+cu124 (CUDA: True)
+
+=== Summary ===
+
+  Repo root:    /mnt/d/APRENDIZAJE/AI_ENGINEERING
+  Venv:         /mnt/d/APRENDIZAJE/AI_ENGINEERING/.venv
+  Python:       Python 3.13.0
+  Packages:     numpy matplotlib jupyter scikit-learn pandas
+
+  [PASS] All checks passed
+
+Activate this environment in future sessions:
+
+  source /mnt/d/APRENDIZAJE/AI_ENGINEERING/.venv/bin/activate

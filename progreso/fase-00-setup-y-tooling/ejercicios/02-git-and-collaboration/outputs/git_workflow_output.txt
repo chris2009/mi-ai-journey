@@ -1,0 +1,37 @@
+=== L02 — Git & Collaboration: Verificación de Ejercicios ===
+
+--- Ejercicio 1: Repositorio y rama ---
+Repo remoto:
+origin	git@github.com:chris2009/mi-ai-journey.git (fetch)
+origin	git@github.com:chris2009/mi-ai-journey.git (push)
+
+Rama actual:
+main
+
+--- Ejercicio 2: .gitignore para AI ---
+Entradas de modelos en .gitignore:
+.pt
+.pth
+.safetensors
+.bin
+
+--- Ejercicio 3: Historial de commits ---
+6e8e9cd chore: subsana metodología — lecciones L01-L09 traducidas al español
+52ced6d docs(fase-00): completa lección 09 - Data Management
+8ed352c docs(fase-00): completa lección 08 - Editor Setup
+78d37cb docs(fase-00): completa lección 07 - Docker for AI
+b42e1c2 docs(fase-00): completa lección 06 - Python Environments
+4d3d5ea docs: agrega APRENDIZAJE.md con diario acumulativo de aprendizaje
+7cff101 docs(fase-00): completa lección 05 - Jupyter Notebooks
+6027cf6 chore: instrucción de mantener CLAUDE.md actualizado
+001d66d chore: agrega CLAUDE.md con contexto del proyecto para sesiones futuras
+7f897ec docs(fase-00): completa lección 04 - API calls con SDK y HTTP crudo
+ff9dde4 docs(fase-00): completa lección 03 - GPU benchmark 15x speedup, VRAM 8.6GB
+37afbc9 docs: actualiza progreso fase-00 en README
+6156aba docs(fase-00): completa lección 02 - git y colaboración
+433e529 init: estructura inicial de mi-ai-journey
+
+=== Resumen ===
+  Rama:   main
+  Commits: 14
+  Último: 6e8e9cd chore: subsana metodología — lecciones L01-L09 traducidas al español
