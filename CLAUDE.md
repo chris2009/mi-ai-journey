@@ -29,22 +29,35 @@ Christian (christian.cajusol@utec.edu.pe). Aprendo AI Engineering siguiendo el c
 | L09 | Data Management | ✅ |
 | L10–L12 | (pendientes) | ⬜ |
 
-## Convenciones
-- Notas por fase: `progreso/fase-XX-nombre/notas.md`
-- Ejercicios: `progreso/fase-XX-nombre/ejercicios/`
-- Artefactos reutilizables (prompts, skills): `outputs/`
+## Convenciones de archivos por lección
+Cada lección completada debe producir:
+1. **Lección traducida**: `progreso/fase-XX-nombre/lecciones/L0Y-nombre.md` — traducción completa del `en.md` al español
+2. **Ejercicios**: `progreso/fase-XX-nombre/ejercicios/0Y-nombre/` — código de los ejercicios
+3. **Outputs**: `progreso/fase-XX-nombre/ejercicios/0Y-nombre/outputs/` — resultados reales de correr los ejercicios
+4. **Notas**: `progreso/fase-XX-nombre/notas.md` — resumen de conceptos clave + quiz scores
+5. **APRENDIZAJE.md** — diario acumulativo con código y resultados reales
 - Commit después de cada lección completada
 - README.md se actualiza con el progreso al terminar cada lección
+
+## METODOLOGÍA DE ENSEÑANZA — CRÍTICO
+**Rol de Claude:** Guía. Explica conceptos, da instrucciones paso a paso, verifica resultados.
+**Rol de Christian:** Ejecuta. Escribe el código, corre los comandos, comparte los outputs.
+
+### Flujo por lección:
+1. Claude lee `en.md` y administra pre-quiz con AskUserQuestion
+2. Claude explica la lección en español (conceptos, por qué importa, contexto)
+3. Claude da instrucciones de ejercicios UNO POR UNO — Christian los ejecuta
+4. Christian comparte el output → Claude lo verifica y explica qué significa
+5. Claude administra post-quiz con AskUserQuestion
+6. Claude traduce el `en.md` completo al español → guarda en `lecciones/`
+7. Claude actualiza notas.md, APRENDIZAJE.md, CLAUDE.md, README.md
+8. Commit + push
+
+**Claude NO corre código. Christian SÍ corre código.**
+**Claude NO escribe ejercicios por Christian. Claude GUÍA a Christian para que los escriba.**
 
 ## Mantenimiento de este archivo
 **Actualizar CLAUDE.md siempre que:**
 - Se complete una lección (cambiar ⬜/🔄 a ✅ en la tabla de progreso)
 - Se cambie de fase
 - Se agregue una convención nueva al proyecto
-
-## Cómo guiar las lecciones
-1. Leer `ai-engineering-from-scratch/phases/XX-nombre/YY-leccion/docs/en.md`
-2. Explicar en español, hacer ejercicios prácticos
-3. Si hay `quiz.json`, administrar el quiz al final
-4. Actualizar `progreso/.../notas.md` y `README.md`
-5. Commit + push al terminar
