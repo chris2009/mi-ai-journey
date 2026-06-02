@@ -481,6 +481,90 @@ RTX 4070 Laptop accesible desde dentro del container
 
 ---
 
+### L08 — Editor Setup ✅
+
+**Concepto central:** El editor es tu co-piloto. Configurarlo bien una vez ahorra 20 minutos diarios de fricción.
+
+**Las 5 capas del setup:**
+```
+5. Remote Development  → SSH a GPU boxes / cloud VMs
+4. Terminal Integration → scripts, nvidia-smi, debug
+3. AI-Specific Settings → format-on-save, type checking, rulers
+2. Extensions          → Python, Jupyter, Pylance, GitLens, Black, Ruff
+1. Base Editor         → VS Code
+```
+
+**Extensiones instaladas:**
+
+```bash
+code --install-extension ms-python.python
+code --install-extension ms-python.vscode-pylance
+code --install-extension ms-toolsai.jupyter
+code --install-extension eamodio.gitlens
+code --install-extension ms-python.debugpy
+code --install-extension ms-python.black-formatter
+code --install-extension charliermarsh.ruff
+# Remote SSH → instalar en Windows, no en WSL
+```
+
+**Settings críticos para AI (`.vscode/settings.json`):**
+
+```jsonc
+{
+    "python.analysis.typeCheckingMode": "basic",  // detecta shape mismatches de tensores
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true               // nunca formatear a mano
+    },
+    "editor.rulers": [88, 120],                   // Black corta en 88
+    "notebook.output.scrolling": true,            // evita que 10k líneas exploten el panel
+    "files.autoSave": "afterDelay",               // nunca correr código stale
+    "files.autoSaveDelay": 1000,
+    "terminal.integrated.scrollback": 10000,
+    "search.exclude": { "**/.venv": true }        // excluye venv de búsquedas
+}
+```
+
+**Por qué `typeCheckingMode: basic` es crítico para AI:**
+Detecta errores de tipo en tensores *antes* de lanzar un training run de 8 horas.
+```python
+# Pylance marca esto con squiggly rojo:
+model(x)        # x es List, pero model espera Tensor
+loss(pred, y)   # y es float, pero loss espera LongTensor
+```
+
+**Terminal split para monitoreo de GPU:**
+```
+Panel izquierdo: python train.py
+Panel derecho:   watch -n 1 nvidia-smi
+```
+
+**SSH config para conectar a GPU remota:**
+```
+Host gpu-box
+    HostName 203.0.113.50
+    User ubuntu
+    IdentityFile ~/.ssh/id_ed25519
+    ForwardAgent yes
+```
+Después: `Remote-SSH: Connect to Host > gpu-box` → VS Code completo en el servidor remoto.
+
+**Alternativas evaluadas:**
+| Editor | Veredicto |
+|--------|-----------|
+| Cursor | VS Code fork con AI integrada — mismas extensiones y settings |
+| Windsurf | Igual que Cursor, otra opción AI-first |
+| Neovim | Solo si ya eres experto — no aprender junto con AI Engineering |
+
+**Reglas que aprendí:**
+- Remote SSH se instala en Windows (inicia la conexión), no en WSL
+- `notebook.output.scrolling` es imprescindible antes del primer training loop
+- `search.exclude` con `.venv` evita que grep te devuelva miles de resultados de librerías
+
+**Quiz: pre 2/2 · post 3/3** ✅
+
+---
+
 ## Fase 01 — Math Foundations ⬜
 
 *Pendiente*

@@ -267,3 +267,56 @@ docker compose down -v   # para todo + elimina volumes
 Servicios se comunican por nombre: `http://qdrant:6333` desde ai-dev.
 
 ### Quiz: pre 2/2 · post 2/3 ✅
+
+## Lección 08 — Editor Setup ✅
+
+### Las 5 capas del setup para AI Engineering
+```
+5. Remote Development  → SSH a GPU boxes / cloud VMs
+4. Terminal Integration → scripts, nvidia-smi, debug
+3. AI-Specific Settings → format-on-save, type checking, rulers
+2. Extensions          → Python, Jupyter, Pylance, GitLens, Black, Ruff
+1. Base Editor         → VS Code
+```
+
+### Extensiones instaladas
+| Extensión | Para qué sirve |
+|-----------|----------------|
+| Python | Soporte de lenguaje, detección de venv, run/debug |
+| Pylance | Type checking rápido, autocompletado, resolución de imports |
+| Jupyter | Correr notebooks en VS Code, variable explorer |
+| GitLens | Blame inline — quién cambió qué y cuándo |
+| Remote SSH | Abrir carpeta de GPU remota como si fuera local |
+| Debugpy | Debugging paso a paso para Python |
+| Black Formatter | Formato automático al guardar |
+| Ruff | Linting rápido, detecta errores comunes |
+
+> Remote SSH no se instala en WSL — va en el lado Windows (es la extensión que inicia la conexión desde tu máquina local).
+
+### Settings clave en `.vscode/settings.json`
+| Setting | Por qué importa |
+|---------|----------------|
+| `typeCheckingMode: "basic"` | Detecta shape mismatches de tensores antes de correr |
+| `formatOnSave: true` | Black formatea al guardar — nunca formatear a mano |
+| `rulers: [88, 120]` | Black corta en 88, referencia visual para comentarios en 120 |
+| `notebook.output.scrolling: true` | Sin esto, 10k líneas de training loop explotan el panel |
+| `files.autoSave: afterDelay` | Guarda 1s después de escribir — nunca código stale |
+
+### SSH config para GPU remota
+```
+Host gpu-box
+    HostName 203.0.113.50
+    User ubuntu
+    IdentityFile ~/.ssh/id_ed25519
+    ForwardAgent yes
+```
+Luego: `Remote-SSH: Connect to Host > gpu-box` conecta instantáneamente.
+
+### Alternativas al editor
+| Editor | Cuándo usarlo |
+|--------|--------------|
+| Cursor | VS Code fork con AI integrada — mismo ecosystem, mismas extensiones |
+| Windsurf | Igual que Cursor, otra opción AI-first |
+| Neovim | Solo si ya eres experto — no aprender en paralelo con AI Engineering |
+
+### Quiz: pre 2/2 · post 3/3 ✅

@@ -25,7 +25,8 @@ Christian (christian.cajusol@utec.edu.pe). Aprendo AI Engineering siguiendo el c
 | L05 | Jupyter Notebooks | ✅ |
 | L06 | Python Environments | ✅ |
 | L07 | Docker for AI | ✅ |
-| L08–L12 | (pendientes) | ⬜ |
+| L08 | Editor Setup | ✅ |
+| L09–L12 | (pendientes) | ⬜ |
 
 ## Convenciones
 - Notas por fase: `progreso/fase-XX-nombre/notas.md`
