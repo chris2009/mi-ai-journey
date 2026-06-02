@@ -565,6 +565,90 @@ Después: `Remote-SSH: Connect to Host > gpu-box` → VS Code completo en el ser
 
 ---
 
+### L09 — Data Management ✅
+
+**Concepto central:** Los datos son el combustible. La librería `datasets` de HF maneja descarga, caché, streaming y conversión de formatos en una sola API.
+
+**Flujo completo:**
+```
+Hugging Face Hub → datasets library → ~/.cache/huggingface/
+       ↓
+Conversión: CSV / JSON / Parquet / Arrow
+       ↓
+Splits: train / val / test → pipeline de entrenamiento
+```
+
+**Instalación:**
+```bash
+uv pip install datasets huggingface_hub
+```
+
+**Cargar un dataset (con caché automático):**
+```python
+from datasets import load_dataset
+
+ds = load_dataset("nyu-mll/glue", "mrpc")
+print(ds["train"][0])
+# Segunda llamada → carga desde caché, 0 HTTP requests
+```
+
+**Streaming — para datasets que no caben en disco:**
+```python
+ds = load_dataset("nyu-mll/glue", "mrpc", split="train", streaming=True)
+for example in ds:
+    process(example)  # RAM constante, sin importar el tamaño del dataset
+```
+
+**Conversión de formatos:**
+```python
+sample.to_csv("data.csv")
+sample.to_json("data.json")
+sample.to_parquet("data.parquet")  # ← el más eficiente para ML
+```
+
+**Benchmark real (500 filas GLUE/MRPC):**
+```
+CSV:     123,970 bytes
+JSON:    144,585 bytes
+Parquet:  88,412 bytes  → 1.4x más pequeño, mucho más rápido de leer
+```
+
+**Splits reproducibles con seed fijo:**
+```python
+split1 = ds.train_test_split(test_size=0.30, seed=42)
+split2 = split1["test"].train_test_split(test_size=0.50, seed=42)
+train, val, test = split1["train"], split2["train"], split2["test"]
+# Resultado: 2567 / 550 / 551 (70% / 15% / 15%)
+# seed=42 → mismos índices en cada máquina
+```
+
+**Descargar archivos de modelos:**
+```python
+from huggingface_hub import hf_hub_download, snapshot_download
+
+path = hf_hub_download("sentence-transformers/all-MiniLM-L6-v2", "config.json")
+# Cachea en ~/.cache/huggingface/hub/ — siguiente llamada es instantánea
+```
+
+**Manejo de archivos grandes:**
+| Método | Complejidad | Cuándo usarlo |
+|--------|-------------|---------------|
+| `.gitignore` | Baja | Proyectos personales, datos re-descargables |
+| Git LFS | Media | Equipos compartiendo pesos vía git (1 GB gratis en GitHub) |
+| DVC | Alta | Reproducir experimentos exactos en distintas máquinas |
+
+**Regla aprendida — namespaces en datasets 4.x:**
+```python
+# datasets 4.x + huggingface_hub 1.x requieren namespace/nombre completo
+"nyu-mll/glue"                               # antes: "glue"
+"stanfordnlp/imdb"                           # antes: "imdb"
+"cornell-movie-review-data/rotten_tomatoes"  # antes: "rotten_tomatoes"
+```
+
+**Quiz: pre 2/2 · post 3/3** ✅
+
+---
+
 ## Fase 01 — Math Foundations ⬜
 
 *Pendiente*

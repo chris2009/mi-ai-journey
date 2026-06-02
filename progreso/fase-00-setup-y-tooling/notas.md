@@ -320,3 +320,127 @@ Luego: `Remote-SSH: Connect to Host > gpu-box` conecta instantáneamente.
 | Neovim | Solo si ya eres experto — no aprender en paralelo con AI Engineering |
 
 ### Quiz: pre 2/2 · post 3/3 ✅
+
+## Lección 09 — Data Management ✅
+
+### El flujo de datos en AI Engineering
+```
+Hugging Face Hub → datasets library → caché local (~/.cache/huggingface/)
+       ↓
+Conversión de formato (CSV / JSON / Parquet / Arrow)
+       ↓
+Splits: train / val / test → pipeline de entrenamiento
+```
+
+### Formatos — cuándo usar cada uno
+| Formato | Tamaño | Velocidad | Cuándo usarlo |
+|---------|--------|-----------|---------------|
+| CSV | Grande | Lento | Intercambio, hojas de cálculo |
+| JSON | Grande | Lento | APIs, datos anidados |
+| **Parquet** | **Pequeño** | **Rápido** | **Almacenamiento ML — el estándar** |
+| Arrow | Pequeño | Más rápido | Memoria interna — lo que usa `datasets` |
+
+### Benchmark real (500 filas GLUE/MRPC)
+```
+CSV:     123,970 bytes
+JSON:    144,585 bytes
+Parquet:  88,412 bytes   → 1.4x más pequeño que CSV
+```
+
+### Splits 70/15/15 con seed fijo
+```python
+split1 = ds.train_test_split(test_size=0.30, seed=42)
+split2 = split1["test"].train_test_split(test_size=0.50, seed=42)
+# seed=42 → mismos índices en cada ejecución → reproducibilidad garantizada
+```
+
+### Streaming — memoria constante sin importar el tamaño
+```python
+ds = load_dataset("nyu-mll/glue", "mrpc", split="train", streaming=True)
+# Procesa fila a fila. RAM no crece aunque el dataset tenga 200 GB.
+```
+
+### Manejo de archivos grandes
+| Método | Complejidad | Cuándo usarlo |
+|--------|-------------|---------------|
+| `.gitignore` | Baja | Proyectos personales, datos re-descargables |
+| Git LFS | Media | Equipos compartiendo pesos de modelos vía git |
+| DVC | Alta | Reproducir experimentos exactos en distintas máquinas |
+
+### Datasets — namespaces actualizados (datasets 4.x + huggingface_hub 1.x)
+```python
+"nyu-mll/glue"                               # antes: "glue"
+"stanfordnlp/imdb"                           # antes: "imdb"
+"cornell-movie-review-data/rotten_tomatoes"  # antes: "rotten_tomatoes"
+```
+
+### Caché automático
+```
+~/.cache/huggingface/datasets/   ← datasets
+~/.cache/huggingface/hub/        ← modelos
+```
+Segunda llamada → carga desde caché, 0 HTTP requests.
+
+### Quiz: pre 2/2 · post 3/3 ✅
+
+## Lección 09 — Data Management ✅
+
+### El flujo de datos en AI Engineering
+```
+Hugging Face Hub → datasets library → caché local (~/.cache/huggingface/)
+       ↓
+Conversión de formato (CSV / JSON / Parquet / Arrow)
+       ↓
+Splits: train / val / test → pipeline de entrenamiento
+```
+
+### Formatos — cuándo usar cada uno
+| Formato | Tamaño | Velocidad | Cuándo usarlo |
+|---------|--------|-----------|---------------|
+| CSV | Grande | Lento | Intercambio, hojas de cálculo |
+| JSON | Grande | Lento | APIs, datos anidados |
+| **Parquet** | **Pequeño** | **Rápido** | **Almacenamiento ML — el estándar** |
+| Arrow | Pequeño | Más rápido | Memoria interna — lo que usa `datasets` |
+
+### Benchmark real (500 filas GLUE/MRPC)
+```
+CSV:     123,970 bytes
+JSON:    144,585 bytes
+Parquet:  88,412 bytes   → 1.4x más pequeño que CSV
+```
+
+### Splits 70/15/15 con seed fijo
+```python
+split1 = ds.train_test_split(test_size=0.30, seed=42)
+split2 = split1["test"].train_test_split(test_size=0.50, seed=42)
+# seed=42 → mismos índices en cada ejecución → reproducibilidad garantizada
+```
+
+### Streaming — memoria constante sin importar el tamaño
+```python
+ds = load_dataset("nyu-mll/glue", "mrpc", split="train", streaming=True)
+# Procesa fila a fila. RAM no crece aunque el dataset tenga 200 GB.
+```
+
+### Manejo de archivos grandes
+| Método | Complejidad | Cuándo usarlo |
+|--------|-------------|---------------|
+| `.gitignore` | Baja | Proyectos personales, datos re-descargables |
+| Git LFS | Media | Equipos compartiendo pesos de modelos vía git |
+| DVC | Alta | Reproducir experimentos exactos en distintas máquinas |
+
+### Datasets — namespaces actualizados (datasets 4.x + huggingface_hub 1.x)
+```python
+"nyu-mll/glue"                               # antes: "glue"
+"stanfordnlp/imdb"                           # antes: "imdb"
+"cornell-movie-review-data/rotten_tomatoes"  # antes: "rotten_tomatoes"
+```
+
+### Caché automático
+```
+~/.cache/huggingface/datasets/   ← datasets
+~/.cache/huggingface/hub/        ← modelos
+```
+Segunda llamada → carga desde caché, 0 HTTP requests.
+
+### Quiz: pre 2/2 · post 3/3 ✅
