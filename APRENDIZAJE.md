@@ -649,6 +649,55 @@ path = hf_hub_download("sentence-transformers/all-MiniLM-L6-v2", "config.json")
 
 ---
 
+### L10 — Terminal & Shell ✅
+
+**Concepto central:** La terminal es donde viven los AI engineers. tmux + piping + aliases ahorran horas cada semana.
+
+**Sesión tmux con 3 paneles (ejercicio real):**
+```
+Panel 1: htop          → monitoreo de procesos del sistema
+Panel 2: watch -n1 date → proceso periódico en vivo
+Panel 3: python3 script → training simulado (steps 0-999)
+Barra:   [training]0:python3*
+```
+
+**Redirects esenciales:**
+```bash
+python train.py > output.log 2>&1            # stdout + stderr al mismo archivo
+python train.py > out.log 2> err.log         # separados
+grep "loss:" train.log | awk '{print $NF}'   # extraer solo valores numéricos
+grep "loss:" train.log | wc -l               # contar epochs: 100
+```
+
+**nohup vs tmux:**
+| Método | Sobrevive cierre terminal | Reconexión |
+|--------|--------------------------|------------|
+| `command &` | No | No |
+| `nohup command &` | Sí | No — solo archivo de log |
+| `tmux` | Sí | **Sí** — en vivo |
+
+**Alias `gpu` en acción (RTX 4070 Laptop):**
+```
+$ gpu
+0, NVIDIA GeForce RTX 4070 Laptop GPU, 6 %, 228 MiB, 8188 MiB, 55
+```
+
+**SSH config — simplifica acceso a GPUs remotas:**
+```
+Host gpu
+    HostName 192.168.1.100
+    User ubuntu
+    IdentityFile ~/.ssh/gpu_key
+# Resultado: "ssh gpu" en lugar de "ssh -i ~/.ssh/gpu_key ubuntu@192.168.1.100"
+```
+
+**Aprendizaje clave:** `source ~/.bashrc` resetea el PATH y desactiva el venv.
+Solución: alias `ae` con **ruta absoluta** funciona desde cualquier directorio.
+
+**Quiz: pre 1/2 · post 3/3** ✅
+
+---
+
 ## Fase 01 — Math Foundations ⬜
 
 *Pendiente*

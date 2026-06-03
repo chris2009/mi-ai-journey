@@ -27,7 +27,8 @@ Christian (christian.cajusol@utec.edu.pe). Aprendo AI Engineering siguiendo el c
 | L07 | Docker for AI | ✅ |
 | L08 | Editor Setup | ✅ |
 | L09 | Data Management | ✅ |
-| L10–L12 | (pendientes) | ⬜ |
+| L10 | Terminal & Shell | ✅ |
+| L11–L12 | (pendientes) | ⬜ |
 
 ## Convenciones de archivos por lección
 Cada lección completada debe producir:

@@ -1,0 +1,43 @@
+=== L10 — Ejercicio 1: Sesión tmux con tres paneles ===
+
+Fecha: 2026-06-02
+Sesión: training
+
+--- Verificación de tmux ---
+$ tmux -V
+tmux 3.4
+
+--- Estructura de paneles creada ---
+tmux new -s training
+
+Panel 1 (superior):     htop corriendo
+                        Tasks: 79, 331 thr, 0 kthr, 1 running
+                        Mem: 3.89G/15.46G
+                        Load average: 0.12 0.23 0.22
+                        Uptime: 09:44:07
+                        Procesos visibles: vscode-server, claude, htop, init, systemd
+
+Panel 2 (inferior izq): watch -n1 date
+                        Every 1.0s: date
+                        Tue Jun  2 02:35:23 -05 2026
+
+Panel 3 (inferior der): python3 -c "import time; [print(f'step {i}') or time.sleep(0.5) for i in range(999)]"
+                        step 22
+                        step 23
+                        ...
+                        step 31 (y contando)
+
+Barra inferior tmux: [training]0:python3*  "DESKTOP-KHH3I66" 02:35 02-Jun-26
+
+--- Comandos usados ---
+Ctrl+B "   → dividir horizontalmente
+Ctrl+B %   → dividir verticalmente
+Ctrl+B d   → desconectarse (sesión sigue corriendo)
+tmux attach -t training  → reconectarse
+
+--- Resultado ---
+[PASS] Sesión tmux creada con 3 paneles
+[PASS] htop corriendo en panel 1
+[PASS] watch -n1 date corriendo en panel 2
+[PASS] Script Python corriendo en panel 3
+[PASS] Desconexión y reconexión exitosa

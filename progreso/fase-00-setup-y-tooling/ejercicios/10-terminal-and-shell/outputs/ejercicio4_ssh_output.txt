@@ -1,0 +1,20 @@
+=== L10 — Ejercicio 4: SSH Config ===
+
+Fecha: 2026-06-02
+
+--- ~/.ssh/config creado ---
+Host localhost-test
+    HostName localhost
+    User xtian
+    Port 22
+
+Host gpu
+    HostName 192.168.1.100
+    User ubuntu
+    IdentityFile ~/.ssh/gpu_key
+
+--- Resultado ---
+[PASS] Archivo ~/.ssh/config creado con sintaxis correcta
+[PASS] Host "localhost-test" para práctica local
+[PASS] Host "gpu" con IP, usuario y llave SSH — patrón para GPU en la nube
+[PASS] Con esta config: "ssh gpu" reemplaza "ssh -i ~/.ssh/gpu_key ubuntu@192.168.1.100"

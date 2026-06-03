@@ -383,64 +383,81 @@ Segunda llamada → carga desde caché, 0 HTTP requests.
 
 ### Quiz: pre 2/2 · post 3/3 ✅
 
-## Lección 09 — Data Management ✅
+## Lección 10 — Terminal & Shell ✅
 
-### El flujo de datos en AI Engineering
-```
-Hugging Face Hub → datasets library → caché local (~/.cache/huggingface/)
-       ↓
-Conversión de formato (CSV / JSON / Parquet / Arrow)
-       ↓
-Splits: train / val / test → pipeline de entrenamiento
-```
+### La terminal es el entorno de trabajo principal en AI Engineering
 
-### Formatos — cuándo usar cada uno
-| Formato | Tamaño | Velocidad | Cuándo usarlo |
-|---------|--------|-----------|---------------|
-| CSV | Grande | Lento | Intercambio, hojas de cálculo |
-| JSON | Grande | Lento | APIs, datos anidados |
-| **Parquet** | **Pequeño** | **Rápido** | **Almacenamiento ML — el estándar** |
-| Arrow | Pequeño | Más rápido | Memoria interna — lo que usa `datasets` |
-
-### Benchmark real (500 filas GLUE/MRPC)
 ```
-CSV:     123,970 bytes
-JSON:    144,585 bytes
-Parquet:  88,412 bytes   → 1.4x más pequeño que CSV
+┌─────────────────────────────────────────────────────────┐
+│  sesión tmux: training                                   │
+│  ┌─────────────────────────┬─────────────────────────┐  │
+│  │ Panel 1: Training run   │ Panel 2: GPU monitor    │  │
+│  │ python train.py         │ watch -n1 nvidia-smi    │  │
+│  └─────────────────────────┴─────────────────────────┘  │
+│  ┌───────────────────────────────────────────────────┐  │
+│  │ Panel 3: Logs                                      │  │
+│  │ tail -f logs/train.log | grep loss                 │  │
+│  └───────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────┘
 ```
 
-### Splits 70/15/15 con seed fijo
-```python
-split1 = ds.train_test_split(test_size=0.30, seed=42)
-split2 = split1["test"].train_test_split(test_size=0.50, seed=42)
-# seed=42 → mismos índices en cada ejecución → reproducibilidad garantizada
+### Redirects esenciales
+| Símbolo | Qué hace |
+|---------|----------|
+| `>` | Escribe stdout a archivo (sobreescribe) |
+| `>>` | Agrega stdout al archivo |
+| `2>` | Escribe stderr a archivo |
+| `2>&1` | Envía stderr al mismo destino que stdout |
+| `\|` | Encadena stdout de un comando como stdin del siguiente |
+
+### Procesos en segundo plano
+| Método | ¿Sobrevive al cierre? | ¿Puedes reconectarte? |
+|--------|----------------------|----------------------|
+| `command &` | No | No |
+| `nohup command &` | Sí | No (solo archivo de log) |
+| `tmux` / `screen` | Sí | **Sí** |
+
+> Para training de más de pocos minutos: siempre tmux.
+
+### Comandos tmux esenciales
+```bash
+tmux new -s training      # crear sesión con nombre
+Ctrl+B "                  # dividir horizontalmente
+Ctrl+B %                  # dividir verticalmente
+Ctrl+B flechas            # navegar entre paneles
+Ctrl+B d                  # desconectarse (sesión sigue corriendo)
+tmux attach -t training   # reconectarse
+tmux ls                   # listar sesiones
+tmux kill-session -t training  # eliminar sesión
 ```
 
-### Streaming — memoria constante sin importar el tamaño
-```python
-ds = load_dataset("nyu-mll/glue", "mrpc", split="train", streaming=True)
-# Procesa fila a fila. RAM no crece aunque el dataset tenga 200 GB.
+### Aliases configurados en ~/.bashrc
+```bash
+alias gpu='nvidia-smi --query-gpu=index,name,utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader'
+alias ae='source /mnt/d/APRENDIZAJE/AI_ENGINEERING/.venv/bin/activate'
+alias killtraining='pkill -f "python.*train"'
+alias watchloss='tail -f logs/*.log | grep --line-buffered "loss"'
+alias ta='tmux attach -t'
+alias tls='tmux ls'
+alias tn='tmux new -s'
+```
+> `ae` usa ruta absoluta — funciona desde cualquier directorio.
+
+### Ejemplo: extraer loss de un log
+```bash
+grep "loss:" train.log | awk '{print $NF}'   # solo valores numéricos
+grep "loss:" train.log | wc -l               # contar epochs
 ```
 
-### Manejo de archivos grandes
-| Método | Complejidad | Cuándo usarlo |
-|--------|-------------|---------------|
-| `.gitignore` | Baja | Proyectos personales, datos re-descargables |
-| Git LFS | Media | Equipos compartiendo pesos de modelos vía git |
-| DVC | Alta | Reproducir experimentos exactos en distintas máquinas |
-
-### Datasets — namespaces actualizados (datasets 4.x + huggingface_hub 1.x)
-```python
-"nyu-mll/glue"                               # antes: "glue"
-"stanfordnlp/imdb"                           # antes: "imdb"
-"cornell-movie-review-data/rotten_tomatoes"  # antes: "rotten_tomatoes"
+### GPU verificada
+```
+$ gpu
+0, NVIDIA GeForce RTX 4070 Laptop GPU, 6 %, 228 MiB, 8188 MiB, 55
 ```
 
-### Caché automático
-```
-~/.cache/huggingface/datasets/   ← datasets
-~/.cache/huggingface/hub/        ← modelos
-```
-Segunda llamada → carga desde caché, 0 HTTP requests.
+### Nota clave: source ~/.bashrc desactiva el venv
+`source ~/.bashrc` resetea el PATH, borrando la activación del venv.
+Solución: correr `ae` después de cada `source ~/.bashrc`.
+El alias `ae` con ruta absoluta lo resuelve en un comando.
 
-### Quiz: pre 2/2 · post 3/3 ✅
+### Quiz: pre 1/2 · post 3/3 ✅

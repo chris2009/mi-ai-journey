@@ -1,0 +1,24 @@
+=== L10 — Ejercicio 2: Aliases de shell ===
+
+Fecha: 2026-06-02
+
+--- Aliases agregados a ~/.bashrc ---
+alias gpu='nvidia-smi --query-gpu=index,name,utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader'
+alias killtraining='pkill -f "python.*train"'
+alias ae='source /mnt/d/APRENDIZAJE/AI_ENGINEERING/.venv/bin/activate'
+alias watchloss='tail -f logs/*.log | grep --line-buffered "loss"'
+alias ta='tmux attach -t'
+alias tls='tmux ls'
+alias tn='tmux new -s'
+
+--- Verificación ---
+$ gpu
+0, NVIDIA GeForce RTX 4070 Laptop GPU, 6 %, 228 MiB, 8188 MiB, 55
+
+Nota: alias ae corregido para usar ruta absoluta
+(source .venv/bin/activate fallaba fuera del directorio raíz del repo)
+
+--- Resultado ---
+[PASS] Aliases agregados y recargados con source ~/.bashrc
+[PASS] gpu muestra: RTX 4070 Laptop, 6% uso, 228/8188 MiB, 55°C
+[PASS] ae corregido con ruta absoluta — funciona desde cualquier directorio
