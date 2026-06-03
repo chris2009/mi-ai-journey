@@ -698,6 +698,60 @@ Solución: alias `ae` con **ruta absoluta** funciona desde cualquier directorio.
 
 ---
 
+### L11 — Linux para AI ✅
+
+**Concepto central:** La mayoría del AI corre en Linux. Si no sabes navegar la terminal en un servidor remoto, pagas GPU idle mientras googleas.
+
+**Filesystem — directorios que importan:**
+```
+~/           → tu home, aquí trabajas
+/tmp/        → temporales, se borran al reiniciar
+/var/log/    → logs del sistema, revisar cuando algo falla
+/etc/        → configuración del sistema
+```
+
+**Ejercicio 1 — archivos creados:**
+```bash
+$ ls -la ~/proyecto-linux/
+-rw-r--r-- 1 xtian xtian 0 Jun 3 02:05 archivo1.txt
+-rw-r--r-- 1 xtian xtian 0 Jun 3 02:05 archivo2.txt
+-rw-r--r-- 1 xtian xtian 0 Jun 3 02:05 archivo3.txt
+# -rw-r--r-- = dueño:rw-, grupo:r--, otros:r--
+```
+
+**Ejercicio 2 — proceso con más memoria:**
+```
+PID 4968: vscode-server (Pylance) — 150M RES, 9.5% MEM
+```
+
+**Ejercicio 4 — disco real:**
+```
+D:\ (Windows): 31G libres (94% usado) — AJUSTADO
+pip cache:   6.4 GB  →  pip cache purge
+uv cache:    5.8 GB  →  uv cache clean
+Total recuperable: ~12.2 GB
+```
+
+**kill vs kill -9:**
+```bash
+kill 12345    # SIGTERM — el proceso puede hacer cleanup antes de morir
+kill -9 12345 # SIGKILL — el kernel lo mata sin darle oportunidad de nada
+```
+
+**rsync vs scp para transferencias grandes:**
+```bash
+rsync -avz --progress ./data/ user@gpu:/data/
+# Solo transfiere bytes cambiados. Si se interrumpe, reanuda donde quedó.
+# scp empezaría de cero.
+```
+
+**Gotcha crítico:** Linux es case-sensitive. `Model.py` y `model.py` son archivos distintos.
+Un `import Model` que funciona en macOS puede sillar en el servidor Ubuntu.
+
+**Quiz: pre 2/2 · post 3/3** ✅
+
+---
+
 ## Fase 01 — Math Foundations ⬜
 
 *Pendiente*

@@ -1,0 +1,28 @@
+=== L11 — Ejercicio 5: scp / rsync ===
+
+Fecha: 2026-06-03
+
+$ rsync -avz ~/proyecto-linux/ /tmp/proyecto-backup/
+sending incremental file list
+created directory /tmp/proyecto-backup
+./
+archivo1.txt
+archivo2.txt
+archivo3.txt
+
+sent 231 bytes  received 119 bytes  700.00 bytes/sec
+total size is 0  speedup is 0.00
+
+$ ls -la /tmp/proyecto-backup/
+total 32
+drwxr-xr-x  2 xtian xtian  4096 Jun  3 02:05 .
+drwxrwxrwt 17 root  root  24576 Jun  3 02:39 ..
+-rw-r--r--  1 xtian xtian     0 Jun  3 02:05 archivo1.txt
+-rw-r--r--  1 xtian xtian     0 Jun  3 02:05 archivo2.txt
+-rw-r--r--  1 xtian xtian     0 Jun  3 02:05 archivo3.txt
+
+Diferencia clave rsync vs scp:
+  - rsync: transfiere solo bytes cambiados, reanuda si se interrumpe
+  - scp: copia completa siempre, empieza de cero si falla
+
+[PASS] rsync copio 3 archivos con metadatos preservados (-a), flags -z (compresión), -v (verbose)

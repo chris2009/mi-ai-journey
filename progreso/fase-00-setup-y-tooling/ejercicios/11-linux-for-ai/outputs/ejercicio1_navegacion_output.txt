@@ -1,0 +1,21 @@
+=== L11 — Ejercicio 1: Navegación y creación de archivos ===
+
+Fecha: 2026-06-03
+
+$ cd ~
+$ mkdir proyecto-linux
+$ cd proyecto-linux
+$ touch archivo1.txt archivo2.txt archivo3.txt
+$ ls -la
+total 8
+drwxr-xr-x  2 xtian xtian 4096 Jun  3 02:05 .
+drwxr-x--- 27 xtian xtian 4096 Jun  3 02:04 ..
+-rw-r--r--  1 xtian xtian    0 Jun  3 02:05 archivo1.txt
+-rw-r--r--  1 xtian xtian    0 Jun  3 02:05 archivo2.txt
+-rw-r--r--  1 xtian xtian    0 Jun  3 02:05 archivo3.txt
+
+Lectura de permisos:
+  -rw-r--r-- = dueño: rw- (leer+escribir), grupo: r-- (solo leer), otros: r-- (solo leer)
+  drwxr-xr-x = directorio, dueño: rwx, grupo: r-x, otros: r-x
+
+[PASS] Directorio creado, 3 archivos vacíos con touch, listados con ls -la

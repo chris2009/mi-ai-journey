@@ -461,3 +461,151 @@ Solución: correr `ae` después de cada `source ~/.bashrc`.
 El alias `ae` con ruta absoluta lo resuelve en un comando.
 
 ### Quiz: pre 1/2 · post 3/3 ✅
+
+## Lección 11 — Linux para AI ✅
+
+### El filesystem Linux
+
+```
+/
+├── ~/  → home del usuario — aquí trabajas
+├── /tmp/  → temporales, se limpian al reiniciar
+├── /etc/  → configuración del sistema
+├── /var/log/  → logs — revisar cuando algo falla
+└── /proc/, /sys/  → info virtual del kernel y hardware
+```
+
+### Comandos esenciales — 15 que cubren el 95%
+```bash
+# Navegación
+pwd / ls -la / cd ~ / cd ..
+
+# Archivos
+mkdir -p a/b/c   touch archivo   cp -r src/ dest/   mv   rm -rf
+
+# Lectura
+cat / head -20 / tail -f log.txt (tiempo real) / less
+
+# Búsqueda
+grep -r "term" .        find . -name "*.py"
+grep -i "cuda" file     find . -name "*.ckpt" -size +1G
+```
+
+> `rm -rf` es permanente. No hay undo. Verificar la ruta antes de Enter.
+
+### Permisos
+```
+-rw-r--r--
+ │  │  └── otros: r-- (solo leer)
+ │  └───── grupo: r-- (solo leer)
+ └──────── dueño: rw- (leer+escribir)
+```
+```bash
+chmod +x script.sh     # hacer ejecutable
+chmod 755 deploy.sh    # dueño: todo, otros: r+x
+sudo chown user:group archivo.txt
+```
+"Permission denied" → casi siempre `chmod +x` o `sudo` lo arreglan.
+
+### apt — paquetes del sistema
+```bash
+sudo apt update && sudo apt install -y build-essential git curl wget tmux htop unzip python3-venv
+```
+
+### Procesos
+```bash
+kill 12345      # SIGTERM — proceso puede hacer cleanup
+kill -9 12345   # SIGKILL — kernel lo mata sin excepción
+ps aux | grep python
+```
+
+### Disco (ejercicio real)
+```
+/dev/sdf (Linux):  921G libres — OK
+D:\ (Windows):      31G libres (94% usado) — AJUSTADO
+C:\ (Windows):      46G libres (91% usado) — AJUSTADO
+
+Mayores consumidores de caché:
+  pip:  6.4 GB  → pip cache purge
+  uv:   5.8 GB  → uv cache clean
+  Total recuperable: ~12.2 GB
+```
+
+### rsync vs scp
+| | scp | rsync |
+|---|---|---|
+| Si se interrumpe | Empieza de cero | Reanuda donde quedó |
+| Eficiencia | Copia todo siempre | Solo bytes cambiados |
+| Para... | Archivos pequeños | Transferencias grandes |
+
+### Gotcha crítico: case-sensitive
+Linux distingue `Model.py` y `model.py` — son dos archivos distintos.
+En macOS (case-insensitive) el import funciona. En el servidor Linux, falla.
+
+### Quiz: pre 2/2 · post 3/3 ✅
+
+## Lección 11 — Linux para AI ✅
+
+### El filesystem Linux
+
+```
+/
+├── ~/  → home del usuario — aquí trabajas
+├── /tmp/  → temporales, se limpian al reiniciar
+├── /etc/  → configuración del sistema
+├── /var/log/  → logs — revisar cuando algo falla
+└── /proc/, /sys/  → info virtual del kernel y hardware
+```
+
+### Comandos esenciales
+```bash
+# Navegación
+pwd / ls -la / cd ~ / cd ..
+# Archivos
+mkdir -p a/b/c   touch archivo   cp -r src/ dest/   mv   rm -rf
+# Lectura
+cat / head -20 / tail -f log.txt / less
+# Búsqueda
+grep -r "term" .   find . -name "*.py"   find . -name "*.ckpt" -size +1G
+```
+> `rm -rf` es permanente. No hay undo. Verificar la ruta antes de Enter.
+
+### Permisos
+```
+-rw-r--r--  → dueño: rw-, grupo: r--, otros: r--
+```
+```bash
+chmod +x script.sh     # hacer ejecutable
+chmod 755 deploy.sh    # dueño: todo, otros: r+x
+```
+"Permission denied" → casi siempre `chmod +x` o `sudo` lo arreglan.
+
+### apt — paquetes del sistema
+```bash
+sudo apt update && sudo apt install -y build-essential git curl wget tmux htop unzip python3-venv
+```
+
+### Procesos
+```bash
+kill 12345      # SIGTERM — proceso puede hacer cleanup
+kill -9 12345   # SIGKILL — kernel lo mata sin excepción
+```
+
+### Disco (ejercicio real)
+```
+D:\ (Windows):  31G libres (94% usado) — AJUSTADO
+pip cache:   6.4 GB  → pip cache purge
+uv cache:    5.8 GB  → uv cache clean
+Total recuperable: ~12.2 GB
+```
+
+### rsync vs scp
+| | scp | rsync |
+|---|---|---|
+| Si se interrumpe | Empieza de cero | Reanuda donde quedó |
+| Eficiencia | Copia todo siempre | Solo bytes cambiados |
+
+### Gotcha crítico: case-sensitive
+Linux distingue `Model.py` y `model.py`. Un import que pasa en macOS puede fallar en el servidor Linux.
+
+### Quiz: pre 2/2 · post 3/3 ✅

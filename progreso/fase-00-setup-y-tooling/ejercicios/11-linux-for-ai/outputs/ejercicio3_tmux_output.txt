@@ -1,0 +1,21 @@
+=== L11 — Ejercicio 3: tmux con sleep ===
+
+Fecha: 2026-06-03
+
+$ tmux new -s linux-test
+# sleep 300 corriendo dentro
+# Ctrl+B d → desconectado
+
+$ tmux ls
+linux-test: 1 windows (created Wed Jun  3 02:11:57 2026) (attached)
+
+$ tmux attach -t linux-test
+# reconectado, sleep 300 sigue corriendo
+
+# Ctrl+C → parar sleep
+# exit → salir de sesión
+
+$ tmux ls
+no server running on /tmp/tmux-1000/default
+
+[PASS] Sesión creada, sleep corriendo, detach y reattach exitosos, sesión eliminada al salir

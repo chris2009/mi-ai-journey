@@ -28,7 +28,8 @@ Christian (christian.cajusol@utec.edu.pe). Aprendo AI Engineering siguiendo el c
 | L08 | Editor Setup | ✅ |
 | L09 | Data Management | ✅ |
 | L10 | Terminal & Shell | ✅ |
-| L11–L12 | (pendientes) | ⬜ |
+| L11 | Linux para AI | ✅ |
+| L12 | Debugging & Profiling | ⬜ |
 
 ## Convenciones de archivos por lección
 Cada lección completada debe producir:

@@ -1,0 +1,40 @@
+=== L11 — Ejercicio 4: Espacio en disco y caché ===
+
+Fecha: 2026-06-03
+
+--- df -h ---
+Filesystem                                Size  Used Avail Use% Mounted on
+none                                      7.8G     0  7.8G   0% /usr/lib/modules/6.6.87.2-microsoft-standard-WSL2
+/dev/sde                                  136M   71M   54M  57% /mnt/wsl/docker-desktop/docker-desktop-user-distro
+/dev/loop0                                813M  813M     0 100% /mnt/wsl/docker-desktop/cli-tools
+drivers                                   473G  428G   46G  91% /usr/lib/wsl/drivers
+/dev/sdf                                 1007G   35G  921G   4% /
+C:\                                       473G  428G   46G  91% /mnt/c
+D:\                                       454G  424G   31G  94% /mnt/d
+
+Resumen:
+  Partición Linux (/dev/sdf): 921G libres — OK
+  D:\ (Windows):               31G libres (94% usado) — AJUSTADO
+  C:\ (Windows):               46G libres (91% usado) — AJUSTADO
+
+--- du -sh ~/.cache/* ---
+12K     /home/xtian/.cache/Microsoft
+24K     /home/xtian/.cache/checkpoint-nodejs
+167M    /home/xtian/.cache/chroma
+8.0K    /home/xtian/.cache/claude
+804K    /home/xtian/.cache/claude-cli-nodejs
+2.9M    /home/xtian/.cache/huggingface
+36K     /home/xtian/.cache/matplotlib
+6.4G    /home/xtian/.cache/pip          ← mayor consumidor
+164K    /home/xtian/.cache/pkg
+1.8M    /home/xtian/.cache/pnpm
+146M    /home/xtian/.cache/prisma
+8.0K    /home/xtian/.cache/prisma-nodejs
+156M    /home/xtian/.cache/puppeteer
+36K     /home/xtian/.cache/python-entrypoints
+64M     /home/xtian/.cache/snyk
+5.8G    /home/xtian/.cache/uv           ← segundo mayor
+
+Total caché pip+uv: ~12.2 GB (se puede limpiar con: pip cache purge && uv cache clean)
+
+[PASS] df -h y du -sh ejecutados, mayores consumidores identificados

@@ -1,0 +1,20 @@
+=== L11 — Ejercicio 2: htop — proceso con más memoria ===
+
+Fecha: 2026-06-03
+
+Proceso con más memoria (ordenado por MEM% con tecla M):
+  PID:     4968
+  USER:    xtian
+  VIRT:    24.5G
+  RES:     150M
+  MEM%:    9.5%
+  Command: /home/xtian/.vscode-server/bin/.../node
+           → extensión ms-python.vscode-pylance (servidor de lenguaje Python)
+
+Sistema:
+  Tasks: 71, 328 threads, 0 kthr, 1 running
+  Mem:   3.99G / 15.46G usada
+  Load average: 0.23 0.22 0.15
+  Uptime: 15:09:47
+
+[PASS] htop instalado y corriendo, proceso top identificado: vscode-server (Pylance)
