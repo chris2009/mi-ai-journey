@@ -609,3 +609,37 @@ Total recuperable: ~12.2 GB
 Linux distingue `Model.py` y `model.py`. Un import que pasa en macOS puede fallar en el servidor Linux.
 
 ### Quiz: pre 2/2 · post 3/3 ✅
+
+---
+
+## L12 — Debugging and Profiling
+
+### Concepto central
+Los bugs de AI no crashean — producen resultados incorrectos silenciosamente. El 80% vive en niveles 1 y 2 (Python estándar + operaciones de tensores), no en TensorBoard.
+
+### Herramientas por nivel
+| Herramienta | Nivel | Para qué |
+|-------------|-------|----------|
+| `debug_print` | 2 | Shape, dtype, device, NaN de un tensor en una línea |
+| `breakpoint()` condicional | 1 | Parar solo cuando `loss > 100` o `isnan(loss)` |
+| `logging` | 1 | Timestamps + archivo de log para runs nocturnos |
+| `Timer` context manager | 1 | Medir tiempo de secciones específicas |
+| `cProfile -s cumtime` | 1 | Profiling por función — encontrar cuello de botella |
+| `tracemalloc` | 1 | Memoria Python pura (no ve tensores PyTorch) |
+| `tensor.element_size() * nelement()` | 2 | Memoria real de tensores |
+| `torch.cuda.memory_allocated()` | 2 | Memoria GPU en uso |
+| TensorBoard `SummaryWriter` | 3 | Visualizar loss/train vs loss/val, histogramas |
+
+### Bugs comunes
+- **Shape mismatch**: usar `check_shapes` con hooks antes de entrenar
+- **NaN loss**: `detect_nan` revisa gradientes por parámetro; causas: lr alto, log(0), división por cero
+- **Data leakage**: revisar overlap train/test con sets de IDs
+- **Wrong device**: `check_devices` compara device del modelo vs cada tensor
+
+### Hallazgos de los ejercicios
+- `tracemalloc` ve solo 131 B para tensores de 13.1 MB — PyTorch asigna en C++, no en el heap Python
+- `cProfile`: backward pass (37.7%) + Adam optimizer (24.1%) = mayoría del tiempo en CPU
+- TensorBoard: `loss/train`→0, `loss/val`→1.94 (plana) = overfitting clásico confirmado visualmente
+- `isnan()` no atrapa `inf` — un tensor con `-inf/inf` puede tener `has_nan=False` pero `loss=nan`
+
+### Quiz: pre 2/2 · post 3/3 ✅

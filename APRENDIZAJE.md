@@ -750,6 +750,66 @@ Un `import Model` que funciona en macOS puede sillar en el servidor Ubuntu.
 
 **Quiz: pre 2/2 · post 3/3** ✅
 
+
+### L12 — Debugging and Profiling ✅
+
+**Concepto central:** Los bugs de AI no crashean — producen resultados incorrectos silenciosamente. El 80% de los bugs vive en los niveles de Python estándar y operaciones de tensores, no en TensorBoard.
+
+**debug_print — inspección completa de un tensor:**
+```python
+def debug_print(name, tensor):
+    print(f"{name}: shape={tensor.shape}, dtype={tensor.dtype}, "
+          f"device={tensor.device}, "
+          f"min={tensor.min().item():.4f}, max={tensor.max().item():.4f}, "
+          f"has_nan={tensor.isnan().any().item()}")
+```
+
+**breakpoint() condicional — solo para cuando algo falla:**
+```python
+if loss.item() > 100 or torch.isnan(loss):
+    breakpoint()  # abre pdb; comandos: p tensor.shape, c, q
+```
+
+**Ejercicio 1 — device mismatch detectado:**
+```
+Model device: cuda:0
+  Tensor 0: cpu [MISMATCH]  ← tensor olvidado en CPU
+  Tensor 1: cuda:0 [OK]
+GPU: RTX 4070 Laptop — tensor 10k×10k: 400.6 MB → 0.0 MB tras empty_cache()
+```
+
+**Ejercicio 1b — NaN injection:**
+```python
+out = out / (out - out)  # 0/0 → NaN/Inf
+# debug_print detecta: min=-inf, max=inf, mean=nan
+# detect_nan() confirma: NaN loss detected at step 1
+# Nota: has_nan=False porque isnan() no atrapa inf
+```
+
+**Ejercicio 2 — cProfile breakdown (100 steps, CPU):**
+```
+backward pass:   0.191s  (37.7%)  ← más lento
+Adam optimizer:  0.122s  (24.1%)
+linear layers:   0.061s  (12.0%)
+zero_grad:       0.026s   (5.1%)
+```
+
+**Ejercicio 3 — tracemalloc vs memoria real:**
+```
+tracemalloc ve:      131 B  (solo objeto Python)
+Memoria real tensor: 13.1 MB (50×256×256×float32)
+→ Usar: tensor.element_size() * tensor.nelement()
+```
+
+**Ejercicio 4 — TensorBoard overfitting:**
+```
+loss/train: 0.025 → ~0.000  (memoriza 50 muestras)
+loss/val:   1.92  → ~1.94   (plana, no generaliza)
+→ Overfitting clásico confirmado visualmente
+```
+
+**Quiz: pre 2/2 · post 3/3** ✅
+
 ---
 
 ## Fase 01 — Math Foundations ⬜

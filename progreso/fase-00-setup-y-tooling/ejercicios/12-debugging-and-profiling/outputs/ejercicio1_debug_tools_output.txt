@@ -1,0 +1,83 @@
+2026-06-03 14:59:00,558 [INFO] Training started: lr=0.001, batch_size=32, epochs=10
+2026-06-03 14:59:00,558 [INFO] Step 100: loss=2.3026, accuracy=0.10
+2026-06-03 14:59:00,558 [WARNING] Loss spike detected: 15.7 at step 450
+2026-06-03 14:59:00,558 [INFO] Step 1000: loss=0.4512, accuracy=0.87
+2026-06-03 14:59:00,558 [INFO] Training complete: best_loss=0.3201
+============================================================
+  AI Debugging and Profiling Toolkit
+  Phase 0, Lesson 12
+============================================================
+
+--- 1. Print Debugging for Tensors ---
+  input batch: shape=torch.Size([32, 784]), dtype=torch.float32, device=cpu, min=-3.7744, max=3.9555, mean=-0.0099, has_nan=False
+  after matmul: shape=torch.Size([32, 128]), dtype=torch.float32, device=cpu, min=-91.8105, max=90.7901, mean=-0.2967, has_nan=False
+  with injected NaN: shape=torch.Size([32, 128]), dtype=torch.float32, device=cpu, min=nan, max=nan, mean=nan, has_nan=True
+
+--- 2. Timing Code Sections ---
+  [matrix multiply 1000x1000] 0.0155s
+  [matrix multiply 5000x5000] 0.5751s
+
+--- 3. Memory Tracking (tracemalloc) ---
+  Top 5 memory allocations:
+    /mnt/d/APRENDIZAJE/AI_ENGINEERING/progreso/fase-00-setup-y-tooling/ejercicios/12-debugging-and-profiling/debug_tools.py:132: size=8864 B, count=101, average=88 B
+    /mnt/d/APRENDIZAJE/AI_ENGINEERING/progreso/fase-00-setup-y-tooling/ejercicios/12-debugging-and-profiling/debug_tools.py:133: size=80 B, count=1, average=80 B
+
+--- 4. Shape Checking Through Model ---
+  Input: torch.Size([4, 784])
+    0: torch.Size([4, 784]) -> torch.Size([4, 256])
+    1: torch.Size([4, 256]) -> torch.Size([4, 256])
+    2: torch.Size([4, 256]) -> torch.Size([4, 64])
+    3: torch.Size([4, 64]) -> torch.Size([4, 64])
+    4: torch.Size([4, 64]) -> torch.Size([4, 10])
+
+--- 5. NaN Detection ---
+  Normal loss: 2.1263
+  NaN detected: False
+  Simulated NaN loss: nan
+  NaN loss detected at step 99
+  NaN detected: True
+
+--- 6. Device Checking ---
+  Model device: cpu
+    Tensor 0: cpu [OK]
+    Tensor 1: cpu [OK]
+  With mixed devices:
+  Model device: cuda:0
+    Tensor 0: cpu [MISMATCH]
+    Tensor 1: cuda:0 [OK]
+
+--- 7. Gradient Health Check ---
+  Total gradient norm: 6.0453
+
+--- 8. GPU Memory Summary ---
+  GPU: NVIDIA GeForce RTX 4070 Laptop GPU
+  Allocated: 0.0 MB
+  Cached: 2.1 MB
+  After 10k x 10k tensor:
+    Allocated: 400.6 MB
+  After cleanup:
+    Allocated: 0.0 MB
+
+--- 9. Structured Logging ---
+
+--- 10. Conditional Breakpoint Pattern ---
+  In real code, use this pattern:
+
+    for step in range(num_steps):
+        loss = train_step(model, batch)
+        if loss.item() > 10 or torch.isnan(loss):
+            breakpoint()  # drops into pdb
+
+  Useful pdb commands once inside:
+    p tensor.shape       # print shape
+    p tensor.device      # check device
+    p tensor.grad        # inspect gradients
+    p tensor.isnan().sum()  # count NaNs
+    c                    # continue execution
+    q                    # quit debugger
+
+============================================================
+  All demos complete.
+  Next: introduce bugs intentionally and practice catching them.
+============================================================
+

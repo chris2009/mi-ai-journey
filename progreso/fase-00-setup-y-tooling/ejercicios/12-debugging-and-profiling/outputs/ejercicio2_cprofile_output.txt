@@ -1,0 +1,175 @@
+         42368 function calls (40366 primitive calls) in 0.507 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.507    0.507 {built-in method builtins.exec}
+        1    0.000    0.000    0.507    0.507 <string>:1(<module>)
+        1    0.004    0.004    0.507    0.507 profile_loop.py:15(training_loop)
+      100    0.000    0.000    0.197    0.002 _tensor.py:570(backward)
+      100    0.001    0.000    0.197    0.002 __init__.py:242(backward)
+      100    0.001    0.000    0.191    0.002 graph.py:814(_engine_run_backward)
+      100    0.191    0.002    0.191    0.002 {method 'run_backward' of 'torch._C._EngineBase' objects}
+      100    0.002    0.000    0.151    0.002 optimizer.py:473(wrapper)
+      100    0.001    0.000    0.142    0.001 optimizer.py:72(_use_grad)
+      100    0.001    0.000    0.140    0.001 adam.py:210(step)
+      100    0.000    0.000    0.125    0.001 optimizer.py:140(maybe_fallback)
+      100    0.001    0.000    0.124    0.001 adam.py:809(adam)
+      100    0.032    0.000    0.122    0.001 adam.py:340(_single_tensor_adam)
+  700/200    0.001    0.000    0.104    0.001 module.py:1735(_wrapped_call_impl)
+  700/200    0.001    0.000    0.103    0.001 module.py:1743(_call_impl)
+      100    0.001    0.000    0.079    0.001 container.py:248(forward)
+      300    0.000    0.000    0.062    0.000 linear.py:124(forward)
+      300    0.061    0.000    0.061    0.000 {built-in method torch._C._nn.linear}
+      600    0.029    0.000    0.029    0.000 {method 'sqrt' of 'torch._C.TensorBase' objects}
+      100    0.000    0.000    0.027    0.000 _compile.py:22(inner)
+      100    0.000    0.000    0.027    0.000 eval_frame.py:738(_fn)
+      100    0.020    0.000    0.026    0.000 optimizer.py:939(zero_grad)
+      100    0.000    0.000    0.023    0.000 loss.py:1294(forward)
+      100    0.000    0.000    0.023    0.000 functional.py:3404(cross_entropy)
+      100    0.023    0.000    0.023    0.000 {built-in method torch._C._nn.cross_entropy_loss}
+      100    0.021    0.000    0.021    0.000 {built-in method torch.randn}
+      600    0.020    0.000    0.020    0.000 {method 'addcdiv_' of 'torch._C.TensorBase' objects}
+      200    0.000    0.000    0.015    0.000 activation.py:132(forward)
+      200    0.000    0.000    0.015    0.000 functional.py:1693(relu)
+      200    0.014    0.000    0.014    0.000 {built-in method torch.relu}
+      600    0.013    0.000    0.013    0.000 {method 'lerp_' of 'torch._C.TensorBase' objects}
+      100    0.002    0.000    0.012    0.000 adam.py:135(_init_group)
+      600    0.011    0.000    0.011    0.000 {method 'mul_' of 'torch._C.TensorBase' objects}
+      200    0.001    0.000    0.008    0.000 profiler.py:757(__exit__)
+      600    0.007    0.000    0.007    0.000 {method 'addcmul_' of 'torch._C.TensorBase' objects}
+      200    0.000    0.000    0.007    0.000 _ops.py:946(__call__)
+      600    0.006    0.000    0.006    0.000 {method 'add_' of 'torch._C.TensorBase' objects}
+     1200    0.006    0.000    0.006    0.000 {built-in method torch.is_complex}
+      200    0.000    0.000    0.005    0.000 _ops.py:1000(_must_dispatch_in_python)
+      200    0.000    0.000    0.005    0.000 _pytree.py:1224(tree_any)
+      201    0.000    0.000    0.004    0.000 {built-in method builtins.any}
+      100    0.001    0.000    0.004    0.000 __init__.py:88(_make_grads)
+      200    0.001    0.000    0.004    0.000 profiler.py:751(__enter__)
+ 1400/400    0.001    0.000    0.004    0.000 _pytree.py:917(tree_iter)
+      200    0.000    0.000    0.004    0.000 _ops.py:1112(__call__)
+      200    0.004    0.000    0.004    0.000 {built-in method torch._ops.profiler._record_function_enter_new}
+       12    0.003    0.000    0.003    0.000 {built-in method torch.zeros_like}
+      100    0.000    0.000    0.003    0.000 optimizer.py:420(_cuda_graph_capture_health_check)
+      100    0.003    0.000    0.003    0.000 {built-in method torch.ones_like}
+      100    0.002    0.000    0.002    0.000 {built-in method torch.randint}
+      600    0.001    0.000    0.002    0.000 optimizer.py:101(_get_value)
+      200    0.002    0.000    0.002    0.000 {built-in method torch._ops.profiler.}
+      100    0.000    0.000    0.002    0.000 optimizer.py:167(_default_to_fused_or_foreach)
+     1400    0.001    0.000    0.002    0.000 _pytree.py:692(_get_node_type)
+      800    0.000    0.000    0.001    0.000 _pytree.py:699(_is_leaf)
+      100    0.000    0.000    0.001    0.000 __init__.py:116(is_available)
+      200    0.000    0.000    0.001    0.000 {built-in method builtins.all}
+      100    0.000    0.000    0.001    0.000 __init__.py:112(_nvml_based_avail)
+     1400    0.001    0.000    0.001    0.000 _pytree.py:681(_is_namedtuple_instance)
+      100    0.000    0.000    0.001    0.000 <frozen os>:810(getenv)
+      600    0.001    0.000    0.001    0.000 {method 'item' of 'torch._C.TensorBase' objects}
+      200    0.000    0.000    0.001    0.000 profiler.py:740(__init__)
+      100    0.000    0.000    0.001    0.000 <frozen _collections_abc>:808(get)
+      100    0.000    0.000    0.001    0.000 graphs.py:25(is_current_stream_capturing)
+     1500    0.001    0.000    0.001    0.000 __init__.py:367(is_compiling)
+      100    0.001    0.000    0.001    0.000 {built-in method torch._C._cuda_isCurrentStreamCapturing}
+      100    0.001    0.000    0.001    0.000 optimizer.py:184(<genexpr>)
+      100    0.000    0.000    0.001    0.000 <frozen os>:711(__getitem__)
+  301/300    0.001    0.000    0.001    0.000 typing.py:426(inner)
+      200    0.001    0.000    0.001    0.000 eval_frame.py:110(_maybe_set_eval_frame)
+     2650    0.001    0.000    0.001    0.000 {built-in method builtins.isinstance}
+     3105    0.001    0.000    0.001    0.000 {method 'append' of 'list' objects}
+      200    0.000    0.000    0.001    0.000 grad_mode.py:184(__init__)
+      200    0.000    0.000    0.000    0.000 _pytree.py:466(_dict_flatten)
+      700    0.000    0.000    0.000    0.000 {built-in method torch._C._get_tracing_state}
+      700    0.000    0.000    0.000    0.000 module.py:1915(__getattr__)
+      600    0.000    0.000    0.000    0.000 {method 'conj' of 'torch._C.TensorBase' objects}
+      200    0.000    0.000    0.000    0.000 _ops.py:1002(<lambda>)
+     2104    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+      606    0.000    0.000    0.000    0.000 _tensor.py:1166(__hash__)
+      100    0.000    0.000    0.000    0.000 <frozen os>:793(encode)
+      200    0.000    0.000    0.000    0.000 {built-in method torch._C._set_grad_enabled}
+      700    0.000    0.000    0.000    0.000 adam.py:857(<genexpr>)
+     2500    0.000    0.000    0.000    0.000 _jit_internal.py:103(is_scripting)
+      100    0.000    0.000    0.000    0.000 _foreach_utils.py:12(_get_fused_kernels_supported_devices)
+      400    0.000    0.000    0.000    0.000 _pytree.py:438(_tuple_flatten)
+      200    0.000    0.000    0.000    0.000 {built-in method torch._C._get_privateuse1_backend_name}
+      400    0.000    0.000    0.000    0.000 {method 'values' of 'collections.OrderedDict' objects}
+        6    0.000    0.000    0.000    0.000 {built-in method torch.tensor}
+      3/2    0.000    0.000    0.000    0.000 typing.py:574(__getitem__)
+      607    0.000    0.000    0.000    0.000 {built-in method builtins.id}
+      100    0.000    0.000    0.000    0.000 container.py:240(__iter__)
+      410    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+      100    0.000    0.000    0.000    0.000 {method 'encode' of 'str' objects}
+      300    0.000    0.000    0.000    0.000 {method 'values' of 'dict' objects}
+      300    0.000    0.000    0.000    0.000 {built-in method torch.is_grad_enabled}
+      100    0.000    0.000    0.000    0.000 {method 'numel' of 'torch._C.TensorBase' objects}
+      100    0.000    0.000    0.000    0.000 eval_frame.py:152(_callback_from_stance)
+        1    0.000    0.000    0.000    0.000 typing.py:806(Optional)
+      100    0.000    0.000    0.000    0.000 __init__.py:107(_is_compiled)
+        2    0.000    0.000    0.000    0.000 typing.py:753(Union)
+      100    0.000    0.000    0.000    0.000 _foreach_utils.py:8(_get_foreach_kernels_supported_devices)
+      200    0.000    0.000    0.000    0.000 {built-in method torch._C._dynamo.eval_frame.set_eval_frame}
+      100    0.000    0.000    0.000    0.000 __init__.py:232(_tensor_or_tensors_to_tuple)
+      204    0.000    0.000    0.000    0.000 {built-in method builtins.hasattr}
+      100    0.000    0.000    0.000    0.000 {built-in method torch._C._are_functorch_transforms_active}
+      300    0.000    0.000    0.000    0.000 {built-in method torch._C._has_torch_function_unary}
+        1    0.000    0.000    0.000    0.000 _ops.py:1054(__getattr__)
+      200    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+      200    0.000    0.000    0.000    0.000 {method '__exit__' of 'torch._C.DisableTorchFunctionSubclass' objects}
+      100    0.000    0.000    0.000    0.000 {built-in method torch._C._cuda_getDeviceCount}
+      100    0.000    0.000    0.000    0.000 __init__.py:1750(getEffectiveLevel)
+        5    0.000    0.000    0.000    0.000 typing.py:173(_type_check)
+      200    0.000    0.000    0.000    0.000 {method 'keys' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 decorators.py:57(disable)
+        2    0.000    0.000    0.000    0.000 typing.py:1423(__init__)
+      100    0.000    0.000    0.000    0.000 _reduction.py:8(get_enum)
+      200    0.000    0.000    0.000    0.000 decorators.py:198(graph_break)
+        5    0.000    0.000    0.000    0.000 typing.py:164(_type_convert)
+      100    0.000    0.000    0.000    0.000 {built-in method torch._C._has_torch_function_variadic}
+      100    0.000    0.000    0.000    0.000 eval_frame.py:189(_is_skip_guard_eval_unsafe_stance)
+        1    0.000    0.000    0.000    0.000 typing.py:1023(__init__)
+      200    0.000    0.000    0.000    0.000 {built-in method torch._C._dynamo.eval_frame.set_skip_guard_eval_unsafe}
+      100    0.000    0.000    0.000    0.000 __init__.py:38(is_built)
+      100    0.000    0.000    0.000    0.000 {built-in method builtins.iter}
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.compile}
+      200    0.000    0.000    0.000    0.000 _utils_internal.py:174(justknobs_check)
+      200    0.000    0.000    0.000    0.000 __init__.py:128(annotate)
+      200    0.000    0.000    0.000    0.000 typing.py:2366(cast)
+        1    0.000    0.000    0.000    0.000 {built-in method torch._C._get_operation_overload}
+       13    0.000    0.000    0.000    0.000 typing.py:1368(__setattr__)
+        1    0.000    0.000    0.000    0.000 eval_frame.py:709(__call__)
+        2    0.000    0.000    0.000    0.000 typing.py:1307(__init__)
+        6    0.000    0.000    0.000    0.000 optimizer.py:216(_get_scalar_dtype)
+        1    0.000    0.000    0.000    0.000 _ops.py:657(__init__)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        6    0.000    0.000    0.000    0.000 typing.py:789(<genexpr>)
+        2    0.000    0.000    0.000    0.000 typing.py:379(_remove_dups_flatten)
+        1    0.000    0.000    0.000    0.000 eval_frame.py:706(__init__)
+      100    0.000    0.000    0.000    0.000 optimizer.py:459(_optimizer_step_code)
+        1    0.000    0.000    0.000    0.000 _ops.py:1009(_has_script_object_arg)
+        1    0.000    0.000    0.000    0.000 eval_frame.py:402(__init__)
+       13    0.000    0.000    0.000    0.000 typing.py:1294(_is_dunder)
+        1    0.000    0.000    0.000    0.000 functools.py:36(update_wrapper)
+        2    0.000    0.000    0.000    0.000 typing.py:351(_deduplicate)
+        6    0.000    0.000    0.000    0.000 {built-in method torch.get_default_dtype}
+       17    0.000    0.000    0.000    0.000 typing.py:1096(__eq__)
+        1    0.000    0.000    0.000    0.000 _ops.py:1010(<genexpr>)
+        2    0.000    0.000    0.000    0.000 typing.py:260(_collect_type_parameters)
+        1    0.000    0.000    0.000    0.000 {built-in method torch._C._get_schema}
+       15    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 {built-in method fromkeys}
+        3    0.000    0.000    0.000    0.000 eval_frame.py:354(innermost_fn)
+        7    0.000    0.000    0.000    0.000 {built-in method builtins.setattr}
+        2    0.000    0.000    0.000    0.000 typing.py:1105(__hash__)
+        1    0.000    0.000    0.000    0.000 _ops.py:49(__init__)
+        1    0.000    0.000    0.000    0.000 functools.py:66(wraps)
+        9    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {method 'setdefault' of 'dict' objects}
+        6    0.000    0.000    0.000    0.000 typing.py:1427(<genexpr>)
+        1    0.000    0.000    0.000    0.000 {method 'split' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 typing.py:1122(_is_unpacked_typevartuple)
+        3    0.000    0.000    0.000    0.000 {built-in method builtins.callable}
+        1    0.000    0.000    0.000    0.000 {method 'update' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 typing.py:553(__repr__)
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.hash}
+        1    0.000    0.000    0.000    0.000 inspect.py:302(isclass)
+        1    0.000    0.000    0.000    0.000 eval_frame.py:346(nothing)
+
+

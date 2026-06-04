@@ -1,0 +1,30 @@
+=== L12 — Ejercicio 5: breakpoint() interactivo ===
+
+Fecha: 2026-06-04
+
+$ python breakpoint_demo.py
+> breakpoint_demo.py(18)<module>()
+-> breakpoint()
+
+(Pdb) p loss.item()
+1.288372278213501
+
+(Pdb) p output.shape
+torch.Size([4, 5])
+
+(Pdb) p output.device
+device(type='cpu')
+
+(Pdb) model.weight.grad.shape
+torch.Size([5, 10])
+
+(Pdb) c
+# Entrenamiento continuó y terminó limpiamente
+
+Análisis:
+  - loss=1.288: razonable para init aleatoria con 5 clases (log(5)≈1.609)
+  - output.shape=[4,5]: batch=4, clases=5 ✓
+  - output.device=cpu: tensor en el mismo device que el modelo ✓
+  - weight.grad.shape=[5,10]: gradientes existen, forma correcta de Linear(10→5) ✓
+
+[PASS] breakpoint() funcionó en step 3, tensores inspeccionados correctamente

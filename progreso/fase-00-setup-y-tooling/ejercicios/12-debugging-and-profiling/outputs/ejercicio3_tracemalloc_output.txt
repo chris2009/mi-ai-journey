@@ -1,0 +1,8 @@
+Shape del resultado: torch.Size([50, 256, 256])
+
+Top 5 líneas por uso de memoria:
+  1. /mnt/d/APRENDIZAJE/AI_ENGINEERING/progreso/fase-00-setup-y-tooling/ejercicios/12-debugging-and-profiling/memory_profile.py:7: size=131 B, count=2, average=66 B
+
+Memoria real de los tensores:
+  raw (50 tensores 256x256): 13.1 MB
+  result (stack): 13.1 MB
