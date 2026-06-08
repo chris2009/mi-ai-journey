@@ -15,7 +15,33 @@ Christian (christian.cajusol@utec.edu.pe). Aprendo AI Engineering siguiendo el c
 
 ## Progreso actual
 
-### Fase 00 — Setup & Tooling (🔄 En progreso)
+### Fase 00 — Setup & Tooling (✅ Completa)
+
+### Fase 01 — Math Foundations (🔄 En progreso)
+| Lección | Tema | Estado |
+|---------|------|--------|
+| L01 | Linear Algebra Intuition | ✅ |
+| L02 | Vectors & Matrices Operations | ⬜ |
+| L03 | Matrix Transformations | ⬜ |
+| L04 | Calculus for ML | ⬜ |
+| L05 | Chain Rule & Autodiff | ⬜ |
+| L06 | Probability & Distributions | ⬜ |
+| L07 | Bayes Theorem | ⬜ |
+| L08 | Optimization | ⬜ |
+| L09 | Information Theory | ⬜ |
+| L10 | Dimensionality Reduction | ⬜ |
+| L11 | SVD | ⬜ |
+| L12 | Tensor Operations | ⬜ |
+| L13 | Numerical Stability | ⬜ |
+| L14 | Norms & Distances | ⬜ |
+| L15 | Statistics for ML | ⬜ |
+| L16 | Sampling Methods | ⬜ |
+| L17 | Linear Systems | ⬜ |
+| L18 | Convex Optimization | ⬜ |
+| L19 | Complex Numbers | ⬜ |
+| L20 | Fourier Transform | ⬜ |
+| L21 | Graph Theory | ⬜ |
+| L22 | Stochastic Processes | ⬜ |
 | Lección | Tema | Estado |
 |---------|------|--------|
 | L01 | Dev Environment | ✅ |
@@ -33,7 +59,7 @@ Christian (christian.cajusol@utec.edu.pe). Aprendo AI Engineering siguiendo el c
 
 ## Convenciones de archivos por lección
 Cada lección completada debe producir:
-1. **Lección traducida**: `progreso/fase-XX-nombre/lecciones/L0Y-nombre.md` — traducción completa del `en.md` al español
+1. **Lección traducida**: `progreso/fase-XX-nombre/lecciones/L0Y-nombre.md` — traducción completa del `en.md` al español. Los bloques ` ```mermaid ``` ` del original se copian tal cual, solo traduciendo las etiquetas de texto internas. Verificar con `grep -n "mermaid" en.md` antes de guardar. Todas las expresiones matemáticas fuera de bloques de código usan LaTeX compatible con Obsidian: inline con `$...$` y bloque con `$$...$$`.
 2. **Ejercicios**: `progreso/fase-XX-nombre/ejercicios/0Y-nombre/` — código de los ejercicios
 3. **Outputs**: `progreso/fase-XX-nombre/ejercicios/0Y-nombre/outputs/` — resultados reales de correr los ejercicios
 4. **Notas**: `progreso/fase-XX-nombre/notas.md` — resumen de conceptos clave + quiz scores

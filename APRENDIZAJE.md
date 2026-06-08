@@ -812,9 +812,46 @@ loss/val:   1.92  → ~1.94   (plana, no generaliza)
 
 ---
 
-## Fase 01 — Math Foundations ⬜
+## Fase 01 — Math Foundations 🔄
 
-*Pendiente*
+### L01 — Linear Algebra Intuition ✅
+
+**Concepto central:** Los vectores son puntos/direcciones en el espacio; las matrices son transformaciones que mueven esos puntos. Toda red neuronal es, en el fondo, una secuencia de transformaciones lineales.
+
+**Vectores desde cero (Python):**
+
+```python
+class Vector:
+    def __init__(self, components):
+        self.components = list(components)
+
+    def dot(self, other):
+        return sum(a * b for a, b in zip(self.components, other.components))
+
+    def magnitude(self):
+        return sum(x**2 for x in self.components) ** 0.5
+
+    def cosine_similarity(self, other):
+        return self.dot(other) / (self.magnitude() * other.magnitude())
+```
+
+**Ejercicios y resultados reales:**
+
+| # | Ejercicio | Resultado |
+|---|-----------|-----------|
+| 1 | `angle_between` entre vectores | `[1,0]` vs `[0,1]` → 90° · `[1,0]` vs `[1,1]` → 45° · `[1,0]` vs `[1,0]` → 0° |
+| 2 | Matriz de escalado $\begin{pmatrix}2&0\\0&3\end{pmatrix}$ sobre $[1,1]$ | `Original: [1, 1]` → `Escalado: [2, 3]` |
+| 3 | Cosine similarity entre 5 embeddings aleatorios (dim 50) | par más similar: `word_2` y `word_3` con similitud `0.3000` |
+| 4 | Verificar ortonormalidad de Gram-Schmidt vía `np.linalg.qr` | productos punto $\approx 10^{-16}$ (≈0), normas $= 1.0000$ |
+| 5 | Matriz $3\times3$ con rango 2 | `[[1,2,3],[4,5,9],[7,8,15]]` → rango = 2 (columnas dependientes: $v_3 = -v_1 + 2v_2$) |
+| 6 | Proyección de $[1,2,3]$ sobre $[1,1,1]$ | `[2. 2. 2.]` — el promedio de las componentes repetido |
+
+**Insights que me llevo:**
+- El rango deficiente no es solo "menos información" — hace que las ecuaciones normales queden singulares: el sistema no tiene solución única de pesos y queda mal condicionado. Así es como LoRA explota esto a propósito (actualizaciones de pesos confinadas a un subespacio de bajo rango).
+- Proyectar un vector sobre $[1,1,\ldots,1]$ da literalmente el promedio de sus componentes — la dirección donde "todas las variables valen lo mismo" es la mejor aproximación constante en mínimos cuadrados. Es la base de centrar datos antes de PCA.
+- Diferencia entre advertencia del *type checker* (Pylance, líneas subrayadas en rojo) y error real en tiempo de ejecución: el código puede correr perfecto aunque el editor marque una posible inconsistencia de tipos que la lógica del programa garantiza que nunca ocurre.
+
+**Quiz: pre 2/3 · post 3/3** ✅ (el concepto de rango/LoRA, fallado en el pre-quiz, quedó dominado en el post-quiz)
 
 ---
 

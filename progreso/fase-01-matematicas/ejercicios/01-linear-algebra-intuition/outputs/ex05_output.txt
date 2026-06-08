@@ -1,0 +1,5 @@
+Matriz:
+[[ 1  2  3]
+ [ 4  5  9]
+ [ 7  8 15]]
+Rango de la matriz: 2

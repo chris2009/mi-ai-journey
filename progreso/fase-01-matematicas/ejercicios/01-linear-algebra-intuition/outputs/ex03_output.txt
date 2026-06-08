@@ -1,0 +1,15 @@
+labels: ['word_0', 'word_1', 'word_2', 'word_3', 'word_4']
+
+Similitudes calculadas:
+  word_0 vs word_1: 0.1478
+  word_0 vs word_2: -0.0185
+  word_0 vs word_3: 0.1610
+  word_0 vs word_4: 0.1144
+  word_1 vs word_2: -0.1097
+  word_1 vs word_3: 0.0699
+  word_1 vs word_4: 0.0853
+  word_2 vs word_3: 0.3000
+  word_2 vs word_4: 0.2188
+  word_3 vs word_4: 0.1145
+
+Par más similar: word_2 y word_3 con similitud 0.3000
