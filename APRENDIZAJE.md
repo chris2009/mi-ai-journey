@@ -855,6 +855,49 @@ class Vector:
 
 ---
 
+### L02 — Vectors, Matrices & Operations ✅
+
+**Concepto central:** Toda red neuronal es multiplicación de matrices con pasos extra: $\text{output} = \text{relu}(W \mathbin{@} x + b)$. La regla de formas $(m\times n) @ (n\times p) = (m\times p)$ explica cada error de *shape mismatch* en PyTorch, y la diferencia entre multiplicación elemento a elemento (combina posición a posición, mismas formas) y multiplicación matricial (productos punto fila×columna, dimensiones internas coinciden) es la confusión más común de los principiantes.
+
+**Matrix desde cero (Python) — núcleo de las operaciones:**
+
+```python
+class Matrix:
+    def matmul(self, other):
+        return Matrix([
+            [sum(self.data[i][k] * other.data[k][j] for k in range(self.cols))
+             for j in range(other.cols)]
+            for i in range(self.rows)
+        ])
+
+    def determinant(self):
+        if self.shape == (2, 2):
+            return self.data[0][0]*self.data[1][1] - self.data[0][1]*self.data[1][0]
+        det = 0
+        for j in range(self.cols):
+            minor = Matrix([[self.data[i][k] for k in range(self.cols) if k != j]
+                            for i in range(1, self.rows)])
+            det += ((-1) ** j) * self.data[0][j] * minor.determinant()
+        return det
+```
+
+**Ejercicios y resultados reales:**
+
+| # | Ejercicio | Resultado |
+|---|-----------|-----------|
+| 1 | Verificar $A \mathbin{@} A^{-1} = I$ con 3 matrices $2\times2$ + caso singular | identidad confirmada en los 3 casos (`[[1,0],[0,1]]`); matriz singular `[[1,2],[2,4]]` lanza `ValueError: Matrix is singular, no inverse exists` |
+| 2 | Inversa $3\times3$ por método de la adjunta (cofactores + transposición + división entre el determinante) | `[[1,2,3],[0,1,4],[5,6,0]]` → inversa idéntica a `np.linalg.inv` hasta el último decimal |
+| 3 | Red de dos capas (entrada 3 → oculta 4 → salida 2) solo con clase `Matrix` (sin NumPy) | shapes correctas en cada paso: $(3,1)\to(4,1)\to(4,1)\to(2,1)\to(2,1)$; `hidden = [0, 0, 0, 0.745]` |
+
+**Insights que me llevo:**
+- Una matriz singular ($\det = 0$) colapsa el espacio en una dimensión menor — dos puntos distintos terminan en el mismo lugar, así que ninguna transformación puede "reconstruir" de dónde vinieron. Por eso el determinante cero implica "no invertible": es la misma idea del rango deficiente de L01, vista ahora desde el escalado de área/volumen.
+- El método de la adjunta ($A^{-1} = \frac{1}{\det(A)}\text{adj}(A)$) muestra que la inversa no es una caja negra — se construye explícitamente a partir de cofactores y cofactores son determinantes de menores. Esa es la base para entender por qué factorizaciones como LU o QR existen: evitan calcular inversas explícitas porque son numéricamente más estables.
+- Construir la red de dos capas a mano dejó ver la *sparsity* de ReLU en vivo: de 4 neuronas ocultas, 3 salieron en `0` (preactivación negativa apagada) y solo 1 pasó información. En cada forward pass solo un subconjunto de neuronas está realmente "activo" — con pesos sin entrenar es ruido, pero en una red entrenada esa dispersión refleja qué *features* detectó cada neurona.
+
+**Quiz: pre 3/3 · post 3/3** ✅ (dominó los tres conceptos —reglas de shape, element-wise vs. matmul, broadcasting/determinante— desde el pre-quiz)
+
+---
+
 ## Fase 02 — ML Fundamentals ⬜
 
 *Pendiente*

@@ -21,7 +21,7 @@ Christian (christian.cajusol@utec.edu.pe). Aprendo AI Engineering siguiendo el c
 | Lección | Tema | Estado |
 |---------|------|--------|
 | L01 | Linear Algebra Intuition | ✅ |
-| L02 | Vectors & Matrices Operations | ⬜ |
+| L02 | Vectors & Matrices Operations | ✅ |
 | L03 | Matrix Transformations | ⬜ |
 | L04 | Calculus for ML | ⬜ |
 | L05 | Chain Rule & Autodiff | ⬜ |

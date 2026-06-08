@@ -1,0 +1,13 @@
+A^-1 = [[-2.0, 1.0], [1.5, -0.5]]
+A @ A^-1 = [[1.0, 0.0], [0.0, 1.0]]
+B^-1 = [[-4.0, 3.0], [3.5, -2.5]]
+B @ B^-1 = [[1.0, 0.0], [0.0, 1.0]]
+C^-1 = [[1.0, -3.0], [0.0, 1.0]]
+C @ C^-1 = [[1.0, 0.0], [0.0, 1.0]]
+Traceback (most recent call last):
+  File "/mnt/d/APRENDIZAJE/AI_ENGINEERING/progreso/fase-01-matematicas/ejercicios/02-vectors-matrices-operations/ex01.py", line 18, in <module>
+    print("D =", D.inverse_2x2().data)  # Esto debería lanzar un error porque D es singular
+                 ~~~~~~~~~~~~~^^
+  File "/mnt/d/APRENDIZAJE/AI_ENGINEERING/progreso/fase-01-matematicas/ejercicios/02-vectors-matrices-operations/matrix.py", line 68, in inverse_2x2
+    raise ValueError("Matrix is singular, no inverse exists")
+ValueError: Matrix is singular, no inverse exists
