@@ -28,4 +28,4 @@ for i in range(len(words)):
 print("Similitudes calculadas:")
 for w1, w2, sim in similarities:
     print(f"  {w1} vs {w2}: {sim:.4f}")
-print(f"\nPar más similar: {most_similar_pair[0]} y {most_similar_pair[1]} con similitud {max_similarity:.4f}")
+print(f"\nPar más similar: {most_similar_pair[0]} y {most_similar_pair[1]} con similitud {max_similarity:.4f}") # type: ignore
