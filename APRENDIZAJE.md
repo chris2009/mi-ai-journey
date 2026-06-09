@@ -898,6 +898,42 @@ class Matrix:
 
 ---
 
+### L03 — Matrix Transformations ✅
+
+**Concepto central:** Una matriz no es solo una cuadrícula de números — es una máquina espacial. Rotación ($|\det|=1$, preserva distancias), escalado ($\det = s_x \cdot s_y$, estira ejes), cizallamiento ($\det=1$, inclina) y reflexión ($\det=-1$, invierte orientación) son los cuatro tipos fundamentales. Al componer $S @ R \neq R @ S$ — el orden importa porque cada transformación opera sobre el espacio que dejó la anterior. Los autovectores son las direcciones que sobreviven a la transformación (solo se escalan); los autovalores dicen cuánto. La ecuación característica $\det(A - \lambda I) = 0$ los produce.
+
+**Funciones de transformación desde cero:**
+
+```python
+def rotation_2d(theta):
+    c, s = math.cos(theta), math.sin(theta)
+    return [[c, -s], [s, c]]
+
+def eigenvalues_2x2(matrix):
+    a, b = matrix[0]; c, d = matrix[1]
+    trace = a + d; det = a*d - b*c
+    discriminant = trace**2 - 4*det
+    sqrt_disc = discriminant**0.5
+    return ((trace + sqrt_disc)/2, (trace - sqrt_disc)/2)
+```
+
+**Ejercicios y resultados reales:**
+
+| # | Ejercicio | Resultado |
+|---|-----------|-----------|
+| 1 | Rotación 45°, escalado $(2, 0.5)$ y cizallamiento $k_x=1$ sobre cuadrado unitario + verificar distancias | distancias A-B y B-C: $1.0 \to 1.0$ tras rotar — isometría confirmada |
+| 2 | Autovalores de $\begin{pmatrix}4&2\\1&3\end{pmatrix}$ a mano + función propia + NumPy | $\lambda_1=5$, $\lambda_2=2$; autovectores: $(0.894, 0.447)$ y $(\pm0.707, \mp0.707)$ — signo indistinto |
+| 3 | Composición $(R_{30°} \to S_{1.5,0.8} \to Sh_{0.3})$ sobre 8 puntos en círculo + verificar $\det$ | $\det(\text{compuesta})=1.2 = 1.0\times1.2\times1.0$ ✓; círculo $\to$ elipse inclinada |
+
+**Insights que me llevo:**
+- El signo de un autovector es arbitrario: $v$ y $-v$ son igualmente válidos (los autovectores se definen salvo múltiplo escalar). NumPy y la función propia pueden dar signos opuestos y ambos son correctos.
+- $\det(ABC) = \det(A)\cdot\det(B)\cdot\det(C)$: al componer transformaciones, solo el escalado cambia el área — rotación y cizallamiento la dejan intacta. Esta propiedad conecta la geometría de las transformaciones con el álgebra de los determinantes.
+- Aplicar la composición a un círculo da una elipse inclinada: el escalado aplastó y estiró, la rotación giró, el cizallamiento inclinó. La simetría central del círculo ($-p$ opuesto a $p$) sobrevive porque las transformaciones lineales preservan el origen.
+
+**Quiz: pre 3/3 · post 3/3** ✅
+
+---
+
 ## Fase 02 — ML Fundamentals ⬜
 
 *Pendiente*

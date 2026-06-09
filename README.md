@@ -7,7 +7,7 @@ Seguimiento de mi aprendizaje a través del currículo [AI Engineering from Scra
 | Fase | Tema | Estado |
 |------|------|--------|
 | 00 | Setup y Tooling | 🔄 En progreso (L01 ✅ L02 ✅ L03 ✅ L04 ✅ L05 ✅ L06 ✅ L07 ✅ L08 ✅ L09 ✅) |
-| 01 | Matemáticas (álgebra lineal, cálculo, probabilidad) | 🔄 En progreso (L01 ✅ L02 ✅) |
+| 01 | Matemáticas (álgebra lineal, cálculo, probabilidad) | 🔄 En progreso (L01 ✅ L02 ✅ L03 ✅) |
 | 02 | ML Clásico (regresión, árboles, SVM) | ⬜ No iniciado |
 | 03 | Deep Learning (redes neuronales, backprop) | ⬜ No iniciado |
 | 04 | Visión por Computadora | ⬜ No iniciado |

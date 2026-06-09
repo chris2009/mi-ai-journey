@@ -1,0 +1,55 @@
+Puntos Originales (Separados por pi/4 alrededdor de un circulo):
+  Punto 0: (1.0000, 0.0000)
+  Punto 1: (0.7071, 0.7071)
+  Punto 2: (0.0000, 1.0000)
+  Punto 3: (-0.7071, 0.7071)
+  Punto 4: (-1.0000, 0.0000)
+  Punto 5: (-0.7071, -0.7071)
+  Punto 6: (-0.0000, -1.0000)
+  Punto 7: (0.7071, -0.7071)
+
+Puntos después de rotar 30 grados:
+  Punto 0: (0.8660, 0.5000)
+  Punto 1: (0.2588, 0.9659)
+  Punto 2: (-0.5000, 0.8660)
+  Punto 3: (-0.9659, 0.2588)
+  Punto 4: (-0.8660, -0.5000)
+  Punto 5: (-0.2588, -0.9659)
+  Punto 6: (0.5000, -0.8660)
+  Punto 7: (0.9659, -0.2588)
+
+Puntos después de escalar 1.5x en x y 0.8x en y:
+  Punto 0: (1.5000, 0.0000)
+  Punto 1: (1.0607, 0.5657)
+  Punto 2: (0.0000, 0.8000)
+  Punto 3: (-1.0607, 0.5657)
+  Punto 4: (-1.5000, 0.0000)
+  Punto 5: (-1.0607, -0.5657)
+  Punto 6: (-0.0000, -0.8000)
+  Punto 7: (1.0607, -0.5657)
+
+Puntos después de shearing con kx=0.3:
+  Punto 0: (1.0000, 0.0000)
+  Punto 1: (0.9192, 0.7071)
+  Punto 2: (0.3000, 1.0000)
+  Punto 3: (-0.4950, 0.7071)
+  Punto 4: (-1.0000, 0.0000)
+  Punto 5: (-0.9192, -0.7071)
+  Punto 6: (-0.3000, -1.0000)
+  Punto 7: (0.4950, -0.7071)
+
+Determinante de la matriz compuesta: 1.2000
+Determinante de R: 1.0000
+Determinante de S: 1.2000
+Determinante de Sh: 1.0000
+Producto de determinantes: 1.2000
+
+Puntos después de la COMPOSICIÓN (R → S → Sh):
+  Punto 0: (1.4190, 0.4000)
+  Punto 1: (0.6201, 0.7727)
+  Punto 2: (-0.5422, 0.6928)
+  Punto 3: (-1.3868, 0.2071)
+  Punto 4: (-1.4190, -0.4000)
+  Punto 5: (-0.6201, -0.7727)
+  Punto 6: (0.5422, -0.6928)
+  Punto 7: (1.3868, -0.2071)

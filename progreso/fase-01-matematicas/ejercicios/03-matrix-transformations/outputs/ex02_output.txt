@@ -1,0 +1,26 @@
+Manual (comentario en código):
+  Autovalores: 5 y 2
+  Autovectores: (2,1) normalizado → (0.8944, 0.4472) para λ=5
+                (-1,1) normalizado → (-0.7071, 0.7071) para λ=2
+
+=====================================================================
+Cálculo de autovalores y autovectores por FUNCION DESDE CERO:
+=====================================================================
+MATRIZ A:
+[[4, 2], [1, 3]]
+Eigenvalues: 5.0000, 2.0000
+  lambda=5.0, v=[0.8944, 0.4472]
+    A@v = [4.4721, 2.2361]
+    l*v = [4.4721, 2.2361]
+  lambda=2.0, v=[0.7071, -0.7071]
+    A@v = [1.4142, -1.4142]
+    l*v = [1.4142, -1.4142]
+=====================================================================
+Cálculo de autovalores y autovectores por LIBRERÍA:
+=====================================================================
+Eigenvalues: 5.0000, 2.0000
+  lambda=5.0, v=[0.8944, 0.4472]
+  lambda=2.0, v=[-0.7071, 0.7071]
+
+Nota: signo opuesto en λ=2 entre función propia y NumPy — ambos correctos,
+los eigenvectores son únicos salvo multiplicación por escalar (incluyendo signo).
