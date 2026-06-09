@@ -62,8 +62,9 @@ Cada lección completada debe producir:
 1. **Lección traducida**: `progreso/fase-XX-nombre/lecciones/L0Y-nombre.md` — traducción completa del `en.md` al español. Los bloques ` ```mermaid ``` ` del original se copian tal cual, solo traduciendo las etiquetas de texto internas. Verificar con `grep -n "mermaid" en.md` antes de guardar. Todas las expresiones matemáticas fuera de bloques de código usan LaTeX compatible con Obsidian: inline con `$...$` y bloque con `$$...$$`.
 2. **Ejercicios**: `progreso/fase-XX-nombre/ejercicios/0Y-nombre/` — código de los ejercicios
 3. **Outputs**: `progreso/fase-XX-nombre/ejercicios/0Y-nombre/outputs/` — resultados reales de correr los ejercicios
-4. **Notas**: `progreso/fase-XX-nombre/notas.md` — resumen de conceptos clave + quiz scores
-5. **APRENDIZAJE.md** — diario acumulativo con código y resultados reales
+4. **Quiz**: `progreso/fase-XX-nombre/ejercicios/0Y-nombre/quiz.md` — preguntas, opciones, respuesta elegida y si fue correcta (pre-quiz y post-quiz)
+5. **Notas**: `progreso/fase-XX-nombre/notas.md` — resumen de conceptos clave + quiz scores
+6. **APRENDIZAJE.md** — diario acumulativo con código y resultados reales
 - Commit después de cada lección completada
 - README.md se actualiza con el progreso al terminar cada lección
 
@@ -78,7 +79,7 @@ Cada lección completada debe producir:
 4. Claude guía los ejercicios del `.md` traducido UNO POR UNO — Christian los ejecuta
 5. Christian comparte el output → Claude lo verifica, guarda en `outputs/` y explica qué significa
 6. Claude administra post-quiz con AskUserQuestion
-7. Claude actualiza notas.md, APRENDIZAJE.md, CLAUDE.md, README.md
+7. Claude guarda quiz.md en la carpeta de ejercicios de la lección, luego actualiza notas.md, APRENDIZAJE.md, CLAUDE.md, README.md
 8. Commit + push
 
 **Claude NO corre código. Christian SÍ corre código.**
