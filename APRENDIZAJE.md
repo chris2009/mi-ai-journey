@@ -934,6 +934,161 @@ def eigenvalues_2x2(matrix):
 
 ---
 
+### L04 — Calculus for ML ✅
+
+**Concepto central:** La derivada mide pendiente/tasa de cambio; el gradiente la generaliza a varias variables. El descenso de gradiente $w_{\text{nuevo}} = w_{\text{viejo}} - \alpha \nabla f$ es la regla de actualización detrás de todo entrenamiento de redes neuronales. La Hessiana describe curvatura (autovalores con signos mixtos = punto de silla); la serie de Taylor conecta descenso de gradiente (orden 1) con el método de Newton (orden 2). La regla de la cadena aplicada sistemáticamente a un grafo de cómputo es backpropagation.
+
+**Derivada numérica desde cero:**
+
+```python
+def numerical_derivative(f, x, h=1e-7):
+    return (f(x + h) - f(x - h)) / (2 * h)
+
+def f(x):
+    return x ** 2
+
+for x in [-2, -1, 0, 1, 2]:
+    numerical = numerical_derivative(f, x)
+    analytical = 2 * x
+    print(f"x={x:2d}  f'(x) numérica={numerical:.6f}  analítica={analytical:.1f}")
+```
+```
+x=-2  f'(x) numérica=-4.000000  analítica=-4.0
+x=-1  f'(x) numérica=-2.000000  analítica=-2.0
+x= 0  f'(x) numérica=0.000000  analítica=0.0
+x= 1  f'(x) numérica=2.000000  analítica=2.0
+x= 2  f'(x) numérica=4.000000  analítica=4.0
+```
+
+**Comparación numérica vs. analítica para varias funciones (x=2):**
+
+```
+Función          Numérica    Analítica        Error
+--------------------------------------------------
+x^2              4.000000     4.000000     4.33e-09
+x^3             12.000000    12.000000     6.32e-09
+sin(x)          -0.416147    -0.416147     1.12e-10
+e^x              7.389056     7.389056     7.50e-09
+1/x             -0.250000    -0.250000     1.32e-10
+```
+
+> La derivada numérica funciona para cualquier función — polinomios, trigonométricas, exponenciales, racionales — sin derivar a mano, con error $\sim10^{-9}$–$10^{-10}$.
+
+**Gradiente numérico y descenso de gradiente (1D y 2D):**
+
+```python
+def numerical_gradient(f, point, h=1e-7):
+    gradient = []
+    for i in range(len(point)):
+        point_plus = list(point)
+        point_minus = list(point)
+        point_plus[i] += h
+        point_minus[i] -= h
+        partial = (f(point_plus) - f(point_minus)) / (2 * h)
+        gradient.append(partial)
+    return gradient
+
+def f_multi(point):
+    x, y = point
+    return x**2 + 3*x*y + y**2
+
+grad = numerical_gradient(f_multi, [1.0, 2.0])
+print(f"Gradiente numérico en (1,2): {[f'{g:.4f}' for g in grad]}")
+```
+```
+Gradiente numérico en (1,2): ['8.0000', '7.0000']
+Gradiente analítico en (1,2): [2*1+3*2, 3*1+2*2] = [8, 7]
+```
+
+**Descenso de gradiente 2D sobre $f(x,y)=x^2+y^2$ desde $(4,3)$:**
+
+```
+step  0  point=( 3.2000,  2.4000)  f=16.000000
+step  5  point=( 1.0486,  0.7864)  f=1.717987
+step 10  point=( 0.3436,  0.2577)  f=0.184467
+step 15  point=( 0.1126,  0.0844)  f=0.019807
+step 20  point=( 0.0369,  0.0277)  f=0.002127
+step 25  point=( 0.0121,  0.0091)  f=0.000228
+step 29  point=( 0.0050,  0.0037)  f=0.000038
+```
+
+**Hessiana numérica — silla vs. cuenco:**
+
+```python
+def hessian_2d(f, x, y, h=1e-5):
+    fxx = (f(x + h, y) - 2 * f(x, y) + f(x - h, y)) / (h ** 2)
+    fyy = (f(x, y + h) - 2 * f(x, y) + f(x, y - h)) / (h ** 2)
+    fxy = (f(x + h, y + h) - f(x + h, y - h) - f(x - h, y + h) + f(x - h, y - h)) / (4 * h ** 2)
+    return [[fxx, fxy], [fxy, fyy]]
+
+def saddle(x, y):
+    return x ** 2 - y ** 2
+
+def bowl(x, y):
+    return x ** 2 + y ** 2
+```
+```
+Hessiana de silla:  [[2.0, 0.0], [0.0, -2.0]]   ← signos mixtos = punto de silla
+Hessiana de cuenco: [[2.0, 0.0], [0.0, 2.0]]    ← ambos positivos = mínimo local
+```
+
+> **Regla:** autovalores del mismo signo → mínimo (todos +) o máximo (todos -); signos mixtos → punto de silla. Sin importar los valores exactos.
+
+**Aproximación de Taylor para $\sin(h)$ alrededor de $x_0=0$:**
+
+```
+h=0.1  sin(h)=0.0998  orden1=0.1000  orden2=0.1000
+h=0.5  sin(h)=0.4794  orden1=0.5000  orden2=0.5000
+h=1.0  sin(h)=0.8415  orden1=1.0000  orden2=1.0000
+h=2.0  sin(h)=0.9093  orden1=2.0000  orden2=2.0000
+```
+
+> Cerca de $x_0=0$, $\sin(x)\approx x$. El error entre la aproximación y el valor real crece con $h$ — por eso el descenso de gradiente necesita pasos (learning rate) pequeños: la aproximación lineal solo es válida cerca del punto.
+
+**Regresión lineal desde cero (descenso de gradiente, $y=2x+1$):**
+
+```python
+for epoch in range(200):
+    total_loss = 0
+    dw = 0
+    db = 0
+    for x, y in zip(xs, ys):
+        pred = w * x + b
+        error = pred - y
+        total_loss += error ** 2
+        dw += 2 * error * x
+        db += 2 * error
+    dw /= len(xs); db /= len(xs); total_loss /= len(xs)
+    w -= lr * dw
+    b -= lr * db
+```
+```
+epoch   0  w=0.3980  b=-0.0208  loss=67.032927
+epoch  40  w=2.1296  b=0.5319  loss=0.040145
+epoch 199  w=2.0757  b=0.7268  loss=0.013675
+
+Aprendido: y = 2.08x + 0.73   (Real: y = 2x + 1)
+```
+
+Misma lógica con NumPy vectorizado: `Aprendido: y = 2.09x + 0.66`.
+
+**Ejercicios y resultados reales:**
+
+| # | Ejercicio | Resultado |
+|---|-----------|-----------|
+| 1 | `numerical_second_derivative(f, x)` para $f(x)=x^3$ en $x=2$ | `f''(2) numérica = 12.000000` = analítica ($6x$) |
+| 2 | Descenso de gradiente para $f(x,y)=(x-3)^2+(y+1)^2$ desde $(0,0)$ | converge exactamente a $(3.0000, -1.0000)$ en 50 pasos |
+| 3 | Momentum vs. sin momentum en $f(x)=x^4-3x^2$ desde $x=0.5$ | sin momentum: $0.5\to1.2247$ monótono; con momentum ($\beta=0.9$): overshoot a $1.4458$ (step 10), oscila y se asienta cerca de $1.2275$; ambos $f\to-2.25$ |
+
+**Insights que me llevo:**
+- Derivar dos veces con `numerical_derivative` requiere un $h$ exterior más grande ($10^{-4}$) que el interior ($10^{-7}$): si ambos son demasiado pequeños, la resta de números casi iguales en la segunda diferencia amplifica el error de redondeo de punto flotante.
+- La Hessiana conecta directamente con el pre-quiz: autovalores 3 y -1 (signos mixtos) = punto de silla, sin importar la magnitud — la misma regla que $2$ y $-2$ en `saddle(x,y)=x^2-y^2`.
+- Momentum no siempre llega más rápido en pasos absolutos: en $x^4-3x^2$ sobrepasó el mínimo y osciló antes de asentarse, mientras que el descenso de gradiente plano fue monótono. La ventaja real de momentum aparece en superficies con curvatura muy distinta entre direcciones (acelera en las planas, amortigua en las empinadas).
+
+**Quiz: pre 2/3 · post 4/4** ✅ (el concepto de Hessiana/punto de silla, fallado en el pre-quiz, quedó dominado en el post-quiz)
+
+---
+
 ## Fase 02 — ML Fundamentals ⬜
 
 *Pendiente*

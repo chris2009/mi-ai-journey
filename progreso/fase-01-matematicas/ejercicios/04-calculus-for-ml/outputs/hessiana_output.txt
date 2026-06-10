@@ -1,0 +1,2 @@
+Hessiana de silla: [[2.0, 0.0], [0.0, -2.0]]
+Hessiana de cuenco: [[2.0, 0.0], [0.0, 2.0]]

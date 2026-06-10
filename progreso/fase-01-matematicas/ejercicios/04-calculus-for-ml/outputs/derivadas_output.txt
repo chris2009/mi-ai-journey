@@ -1,0 +1,14 @@
+x=-2  f'(x) numérica=-4.000000  analítica=-4.0
+x=-1  f'(x) numérica=-2.000000  analítica=-2.0
+x= 0  f'(x) numérica=0.000000  analítica=0.0
+x= 1  f'(x) numérica=2.000000  analítica=2.0
+x= 2  f'(x) numérica=4.000000  analítica=4.0
+
+--- Paso 5: Comparación numérica vs analítica ---
+Función          Numérica    Analítica        Error
+--------------------------------------------------
+x^2              4.000000     4.000000     4.33e-09
+x^3             12.000000    12.000000     6.32e-09
+sin(x)          -0.416147    -0.416147     1.12e-10
+e^x              7.389056     7.389056     7.50e-09
+1/x             -0.250000    -0.250000     1.32e-10

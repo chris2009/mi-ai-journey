@@ -1,0 +1,9 @@
+epoch   0  w=0.3980  b=-0.0208  loss=67.032927
+epoch  40  w=2.1296  b=0.5319  loss=0.040145
+epoch  80  w=2.1132  b=0.5912  loss=0.030618
+epoch 120  w=2.0989  b=0.6430  loss=0.023351
+epoch 160  w=2.0863  b=0.6883  loss=0.017809
+epoch 199  w=2.0757  b=0.7268  loss=0.013675
+
+Aprendido: y = 2.08x + 0.73
+Real:  y = 2x + 1

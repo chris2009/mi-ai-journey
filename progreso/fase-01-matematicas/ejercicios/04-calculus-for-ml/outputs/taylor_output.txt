@@ -1,0 +1,4 @@
+h=0.1  sin(h)=0.0998  orden1=0.1000  orden2=0.1000
+h=0.5  sin(h)=0.4794  orden1=0.5000  orden2=0.5000
+h=1.0  sin(h)=0.8415  orden1=1.0000  orden2=1.0000
+h=2.0  sin(h)=0.9093  orden1=2.0000  orden2=2.0000
